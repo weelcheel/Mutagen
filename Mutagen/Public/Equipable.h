@@ -13,11 +13,18 @@ class Equipable
 
 public:
 	Equipable() {}
+	
+	UFUNCTION(BlueprintCallable, Category = "Equipable")
+		virtual void Equip(AMutagenCharacter* entity) { check(0 && "You must override this") };
 
-	virtual void Equip(AMutagenCharacter* entity) { check(0 && "You must override this") };
-	virtual void UnEquip(AMutagenCharacter* entity) { check(0 && "You must override this") };
-	virtual bool IsEquiped() { return isEquiped; };
-	virtual void SetEquiped(bool newVal) { isEquiped = newVal; };
+	UFUNCTION(BlueprintCallable, Category = "Equipable")
+		virtual void UnEquip(AMutagenCharacter* entity) { check(0 && "You must override this") };
 
+	UFUNCTION(BlueprintCallable, Category = "Equipable")
+		virtual bool IsEquiped() { return isEquiped; };
+
+	UFUNCTION(BlueprintCallable, Category = "Equipable")
+		virtual void SetEquiped(bool newVal) { isEquiped = newVal; };
+private:
 	bool isEquiped;
 };

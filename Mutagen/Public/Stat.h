@@ -17,9 +17,16 @@ class UStat : public UObject
 public:
 	UStat();
 
+	UFUNCTION(BlueprintCallable, Category = "Stat")
 	double GetValue();
+
+	UFUNCTION(BlueprintCallable, Category = "Stat")
 	void SetValue(double newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Stat")
 	FString GetName();
+
+	UFUNCTION(BlueprintCallable, Category = "Stat")
 	void SetName(FString newVal);
 
 private:

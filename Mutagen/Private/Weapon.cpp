@@ -68,7 +68,7 @@ void AWeapon::Equip(AMutagenCharacter* entity){
 
 	GetWorldTimerManager().SetTimer(this, &AWeapon::OnEquipFinished, duration, false);
 
-	if (GetOwner() && GetOwner()->IsLocallyControlled())
+	if (GetItemOwner() && GetItemOwner()->IsLocallyControlled())
 	{
 		//play weapon equip sound
 	}
@@ -90,12 +90,12 @@ FHitResult AWeapon::WeaponTrace(const FVector& TraceFrom, const FVector& TraceTo
 
 
 void AWeapon::AttachMeshToPawn(){
-	if (GetOwner())
+	if (GetItemOwner())
 	{
 		DetachMeshFromPawn();
 
 		FName AttachPoint; //= GetWeaponAttachPoint()
-		USkeletalMeshComponent* pawnmesh = GetOwner()->GetMesh();
+		USkeletalMeshComponent* pawnmesh = GetItemOwner()->GetMesh();
 		weaponMesh->AttachTo(pawnmesh, AttachPoint);
 	}
 }
@@ -107,9 +107,9 @@ void AWeapon::DetachMeshFromPawn(){
 
 UAudioComponent* AWeapon::PlayWeaponSound(USoundCue* sound){
 	UAudioComponent* AC = NULL;
-	if (sound && GetOwner())
+	if (sound && GetItemOwner())
 	{
-		//AC = UGameplayStatics::PlaySoundAttached(sound, GetOwner()->GetRootComponent());
+		//AC = UGameplayStatics::PlaySoundAttached(sound, GetItemOwner()->GetRootComponent());
 	}
 
 	return AC;
@@ -118,9 +118,9 @@ UAudioComponent* AWeapon::PlayWeaponSound(USoundCue* sound){
 
 float AWeapon::PlayWeaponAnimation(UAnimMontage* animation){
 	float duration = 0.0f;
-	if (GetOwner() && animation)
+	if (GetItemOwner() && animation)
 	{
-		duration = GetOwner()->PlayAnimMontage(animation);
+		duration = GetItemOwner()->PlayAnimMontage(animation);
 	}
 
 	return duration;
@@ -130,9 +130,9 @@ float AWeapon::PlayWeaponAnimation(UAnimMontage* animation){
 float AWeapon::StopWeaponAnimation(UAnimMontage* animation){
 
 	float duration = 0.0f;
-	if (GetOwner() && animation)
+	if (GetItemOwner() && animation)
 	{
-		duration = GetOwner()->PlayAnimMontage(animation);
+		duration = GetItemOwner()->PlayAnimMontage(animation);
 	}
 
 	return duration;
@@ -193,7 +193,7 @@ void AWeapon::PostInitializeComponents(){
 bool AWeapon::CanAttack() {
 	bool bCanAttack = false;
 
-	if (GetOwner()){
+	if (GetItemOwner()){
 		bCanAttack = true;
 	}
 
@@ -224,7 +224,7 @@ void AWeapon::SetWeaponRange(UStat* newVal){
 /**
  * current weapon state
  */
-EWeaponState::Type AWeapon::GetCurrentState(){
+TEnumAsByte<EWeaponState::Type> AWeapon::GetCurrentState(){
 	return currentState;
 }
 

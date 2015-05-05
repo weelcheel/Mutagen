@@ -20,12 +20,17 @@ class AArmour : public AItem, public Equipable
 public:
 	AArmour();
 
-	virtual void UnEquip(AMutagenCharacter* entity);
+	UFUNCTION(BlueprintCallable, Category = "Equipable")
+		virtual void UnEquip(AMutagenCharacter* entity);
+
+	UFUNCTION(BlueprintCallable, Category = "Equipable")
 	virtual void Equip(AMutagenCharacter* entity);
 
-	UStat* GetArmourRatng();
-	void SetArmourRatng(UStat* newVal);
+	UFUNCTION(BlueprintCallable, Category = "Armour")
+		UStat* GetArmourRatng();
 
+	UFUNCTION(BlueprintCallable, Category = "Armour")
+	void SetArmourRatng(UStat* newVal);
 private:
 	UStat* armourRatng;
 

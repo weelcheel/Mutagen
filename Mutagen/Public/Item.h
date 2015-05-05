@@ -43,16 +43,30 @@ public:
 	AItem();
 	AItem(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){};
 
-	ItemEnumns::ItemType GetType();
-	void SetType(ItemEnumns::ItemType newVal);
 
-	FString GetName();
-	void SetName(FString newVal);
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		ItemEnumns::ItemType GetType();
 
-	GradeEnumns::Grade GetGrade();
-	void SetGrade(GradeEnumns::Grade newVal);
-	AMutagenCharacter* GetOwner();
-	void SetOwner(AMutagenCharacter* newVal);
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetType(ItemEnumns::ItemType newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		FString GetName();
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetName(FString newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		GradeEnumns::Grade GetGrade();
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetGrade(GradeEnumns::Grade newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		AMutagenCharacter* GetItemOwner();
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetItemOwner(AMutagenCharacter* newVal);
 
 private:
 	TEnumAsByte<ItemEnumns::ItemType> type;

@@ -19,10 +19,12 @@ class UInventory : public UObject
 public:
 	UInventory();
 
-	TArray<AItem*> GetItems();
-	void SetItems(TArray<AItem*> newVal);
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		TArray<AItem*> GetItems();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		void SetItems(TArray<AItem*> newVal);
 
 private:
 	TArray<AItem*> items;
-
 };

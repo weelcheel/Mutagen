@@ -18,8 +18,12 @@ class USkill : public UObject//, public UActivatable
 public:
 	USkill();
 
-	void Activate();
-	void Clone();
+
+	UFUNCTION(BlueprintCallable, Category = "Skill")
+		void Activate();
+
+	UFUNCTION(BlueprintCallable, Category = "Skill")
+		void Clone();
 
 private:
 	FString name;

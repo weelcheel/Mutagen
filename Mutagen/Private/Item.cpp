@@ -12,9 +12,6 @@ AItem::AItem(){
 
 }
 
-
-
-
 ItemEnumns::ItemType AItem::GetType(){
 	return type;
 }
@@ -45,11 +42,11 @@ void AItem::SetGrade(GradeEnumns::Grade newVal){
 }
 
 
-AMutagenCharacter* AItem::GetOwner(){
+AMutagenCharacter* AItem::GetItemOwner(){
 	return owner;
 }
 
 
-void AItem::SetOwner(AMutagenCharacter* newVal){
+void AItem::SetItemOwner(AMutagenCharacter* newVal){
 	owner = newVal;
 }

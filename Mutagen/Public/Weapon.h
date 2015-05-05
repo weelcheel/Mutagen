@@ -7,6 +7,7 @@
 
 namespace EWeaponState
 {
+	UENUM(BlueprintType)
 	enum Type
 	{
 		Idle,
@@ -31,48 +32,80 @@ class AWeapon : public AItem, public Equipable
 public:
 	AWeapon(const FObjectInitializer& ObjectInitializer);
 
-	virtual void UnEquip(AMutagenCharacter* entity);
-	virtual void Equip(AMutagenCharacter* entity);
-	void OnEquipFinished();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		virtual void UnEquip(AMutagenCharacter* entity);
 
-	UStat* GetWeaponDamage();
-	void SetWeaponDamage(UStat* newVal);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		virtual void Equip(AMutagenCharacter* entity);
 
-	UStat* GetWeaponRange();
-	void SetWeaponRange(UStat* newVal);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void OnEquipFinished();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		UStat* GetWeaponDamage();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void SetWeaponDamage(UStat* newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		UStat* GetWeaponRange();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void SetWeaponRange(UStat* newVal);
 
 	void PostInitializeComponents();
 	/**
 	 * current weapon state
 	 */
-	EWeaponState::Type GetCurrentState();
+	//UFUNCTION(BlueprintCallable, Category = "Weapon")
+		TEnumAsByte<EWeaponState::Type> GetCurrentState();
 
 	/**
 	* current weapon state
 	*/
-	void SetCurrentState(EWeaponState::Type newVal);
+	//UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void SetCurrentState(EWeaponState::Type newVal);
 
 	void DetermineWeaponState();
 
-	void AttachMeshToPawn();
-	void DetachMeshFromPawn();
-	
-	UAudioComponent* PlayWeaponSound(USoundCue* sound);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void AttachMeshToPawn();
 
-	float PlayWeaponAnimation(UAnimMontage* animation);
-	float StopWeaponAnimation(UAnimMontage* animation);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void DetachMeshFromPawn();
 
-	void PlayAttackAnimation();
-	void StopAttackAnimation();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		UAudioComponent* PlayWeaponSound(USoundCue* sound);
 
-	virtual void OnAttackStarted();
-	virtual void OnAttackFinished();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		float PlayWeaponAnimation(UAnimMontage* animation);
 
-	bool CanAttack();
-	void StopAttack();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		float StopWeaponAnimation(UAnimMontage* animation);
 
-	void ServerStopAttack();
-	void StartAttack();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void PlayAttackAnimation();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void StopAttackAnimation();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		virtual void OnAttackStarted();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		virtual void OnAttackFinished();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		bool CanAttack();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void StopAttack();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void ServerStopAttack();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void StartAttack();
 private:
 	UStat* weaponDamage;
 	UStat* weaponRange;
@@ -102,7 +135,7 @@ private:
 	uint32 bReattacking;
 
 	/** current weapon state */
-	EWeaponState::Type currentState;
+	TEnumAsByte<EWeaponState::Type> currentState;
 
 	/** time of last successful weapon attack */
 	float LastAttackTime;
@@ -114,12 +147,12 @@ private:
 	float EquipDuration;
 
 	/**Weapon mesh.*/
-		USkeletalMeshComponent* weaponMesh;
+	USkeletalMeshComponent* weaponMesh;
 protected:
-		
+
 	/**
 	* [local + server] handle weapon attack
 	*/
 	UFUNCTION(BlueprintCallable, Category = Functionality)
-	FHitResult WeaponTrace(const FVector& TraceFrom, const FVector& TraceTo) const;	
+		FHitResult WeaponTrace(const FVector& TraceFrom, const FVector& TraceTo) const;
 };

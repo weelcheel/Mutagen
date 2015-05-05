@@ -27,31 +27,59 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Damage)
 		virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-	void StartWeaponAttack();
-	void StopWeaponAttack();
 
-	int32 GetCurrentHealth();
-	void SetCurrentHealth(int32 newVal);
+	UFUNCTION(BlueprintCallable, Category = "Attack")
+		void StartWeaponAttack();
 
-	int32 GetMaxHealth();
-	void SetMaxHealth(int32 newVal);
+	UFUNCTION(BlueprintCallable, Category = "Attack")
+		void StopWeaponAttack();
 
-	UInventory* GetInventory();
-	void SetInventory(UInventory* newVal);
+	UFUNCTION(BlueprintCallable, Category = "Health")
+		int32 GetCurrentHealth();
 
-	TArray<UStat*> GetUnmodifiedStats();
-	void SetUnmodifiedStats(TArray<UStat*> newVal);
-	
-	TArray<UStat*> GetModifiedStats();
-	void SetModifiedStats(TArray<UStat*> newVal);
+	UFUNCTION(BlueprintCallable, Category = "Health")
+		void SetCurrentHealth(int32 newVal);
 
-	TArray<USkill*> GetSkills();
+	UFUNCTION(BlueprintCallable, Category = "Health")
+		int32 GetMaxHealth();
+
+	UFUNCTION(BlueprintCallable, Category = "Health")
+		void SetMaxHealth(int32 newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		UInventory* GetInventory();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		void SetInventory(UInventory* newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+		TArray<UStat*> GetUnmodifiedStats();
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+		void SetUnmodifiedStats(TArray<UStat*> newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+		TArray<UStat*> GetModifiedStats();
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+		void SetModifiedStats(TArray<UStat*> newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Skills")
+		TArray<USkill*> GetSkills();
+
+	UFUNCTION(BlueprintCallable, Category = "Skills")
 	void SetSkills(TArray<USkill*> newVal);
 
-	TArray<AWeapon*> GetEquipedWeapons();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		TArray<AWeapon*> GetEquipedWeapons();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SetEquipedWeapons(TArray<AWeapon*> newVal);
 
-	int32 GetStamina();
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+		int32 GetStamina();
+
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
 	void SetStamina(int32 newVal);
 private:
 	int32 maxHealth;
