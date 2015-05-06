@@ -11,8 +11,16 @@
 #include "Inventory.h"
 #include "Skill.h"
 #include "Stat.h"
+#include "Passive.h"
 
 AMutagenCharacter::AMutagenCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){
+	SetModifiedStats(*new TArray<UStat*>());
+	SetUnmodifiedStats(*new TArray<UStat*>());
+	SetEquipedWeapons(*new TArray<AWeapon*>());
+	SetSkills(*new TArray<USkill*>());
+	SetCurrentHealth(100);
+	SetMaxHealth(100);
+	SetInventory(ConstructObject<UInventory>(UInventory::StaticClass()));
 
 }
 
@@ -142,4 +150,16 @@ int32 AMutagenCharacter::GetStamina(){
 
 void AMutagenCharacter::SetStamina(int32 newVal){
 	stamina = newVal;
+}
+
+
+TArray<UPassive*> AMutagenCharacter::GetPassives(){
+
+	return passives;
+}
+
+
+void AMutagenCharacter::SetPassives(TArray<UPassive*> newVal){
+
+	passives = newVal;
 }

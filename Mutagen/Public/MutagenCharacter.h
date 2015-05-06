@@ -12,9 +12,13 @@
 class UStat;
 class UInventory;
 class USkill;
-class UWeapon;
+class AWeapon;
+class UPassive;
 
 UCLASS(Blueprintable)
+/**
+ * #include "Skill.h" #include "UQuest.h"
+ */
 class AMutagenCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -25,63 +29,72 @@ public:
 	AMutagenCharacter(const FObjectInitializer& ObjectInitializer);
 
 	/**Calculate defensive damage modifers and inflict damage and .*/
-	UFUNCTION(BlueprintCallable, Category = Damage)
-		virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 
-	UFUNCTION(BlueprintCallable, Category = "Attack")
-		void StartWeaponAttack();
+	/**
+	 * Calculate defensive damage modifers and inflict damage and .
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+	void StartWeaponAttack();
 
-	UFUNCTION(BlueprintCallable, Category = "Attack")
-		void StopWeaponAttack();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void StopWeaponAttack();
 
-	UFUNCTION(BlueprintCallable, Category = "Health")
-		int32 GetCurrentHealth();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	int32 GetCurrentHealth();
 
-	UFUNCTION(BlueprintCallable, Category = "Health")
-		void SetCurrentHealth(int32 newVal);
+	UFUNCTION(BlueprintCallable, Category = "Skills")
+	void SetCurrentHealth(int32 newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Health")
-		int32 GetMaxHealth();
+	UFUNCTION(BlueprintCallable, Category = "Skills")
+	int32 GetMaxHealth();
 
-	UFUNCTION(BlueprintCallable, Category = "Health")
-		void SetMaxHealth(int32 newVal);
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+	void SetMaxHealth(int32 newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		UInventory* GetInventory();
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+	UInventory* GetInventory();
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		void SetInventory(UInventory* newVal);
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+	void SetInventory(UInventory* newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 		TArray<UStat*> GetUnmodifiedStats();
 
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		void SetUnmodifiedStats(TArray<UStat*> newVal);
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetUnmodifiedStats(TArray<UStat*> newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		TArray<UStat*> GetModifiedStats();
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	TArray<UStat*> GetModifiedStats();
 
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		void SetModifiedStats(TArray<UStat*> newVal);
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	void SetModifiedStats(TArray<UStat*> newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Skills")
-		TArray<USkill*> GetSkills();
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	TArray<USkill*> GetSkills();
 
-	UFUNCTION(BlueprintCallable, Category = "Skills")
+	UFUNCTION(BlueprintCallable, Category = "Health")
 	void SetSkills(TArray<USkill*> newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		TArray<AWeapon*> GetEquipedWeapons();
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	TArray<AWeapon*> GetEquipedWeapons();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	UFUNCTION(BlueprintCallable, Category = "Attack")
 	void SetEquipedWeapons(TArray<AWeapon*> newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Stamina")
-		int32 GetStamina();
+	UFUNCTION(BlueprintCallable, Category = "Attack")
+	int32 GetStamina();
 
-	UFUNCTION(BlueprintCallable, Category = "Stamina")
+	/**
+	 * Calculate defensive damage modifers and inflict damage and .
+	 */
+	UFUNCTION(BlueprintCallable, Category = Damage)
 	void SetStamina(int32 newVal);
+
+	TArray<UPassive*> GetPassives();
+	void SetPassives(TArray<UPassive*> newVal);
 private:
 	int32 maxHealth;
 	int32 currentHealth;
@@ -99,4 +112,5 @@ private:
 	TArray<AWeapon*> equipedWeapons;
 
 	int32 stamina;
+	TArray<UPassive*> passives;
 };
