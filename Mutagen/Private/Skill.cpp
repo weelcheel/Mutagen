@@ -21,3 +21,23 @@ void USkill::Clone(){
 
 }
 
+
+double USkill::GetCooldown(){
+
+	return cooldown;
+}
+
+
+void USkill::SetCooldown(double newVal){
+	cooldown = newVal;
+}
+
+
+FString USkill::GetName(){
+	return name;
+}
+
+
+void USkill::SetName(FString newVal){
+	name = newVal;
+}

@@ -4,13 +4,15 @@
 #include "MutagenGameMode.h"
 #include "MutagenHUD.h"
 #include "MutagenPlayer.h"
+#include "MutagenPlayerController.h"
 
 AMutagenGameMode::AMutagenGameMode(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	// Set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPerson/Blueprints/FirstPersonCharacter"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPerson/Character/Player"));
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
+	PlayerControllerClass = AMutagenPlayerController::StaticClass();
 
 	// use our custom HUD class
 	HUDClass = AMutagenHUD::StaticClass();

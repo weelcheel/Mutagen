@@ -6,14 +6,15 @@
 ///////////////////////////////////////////////////////////
 
 #pragma once
-#include "Inventory.h"
-#include "Stat.h"
-#include "Skill.h"
-#include "Weapon.h"
 #include "GameFramework/Character.h"
 #include "MutagenCharacter.generated.h"
 
-UCLASS()
+class UStat;
+class UInventory;
+class USkill;
+class UWeapon;
+
+UCLASS(Blueprintable)
 class AMutagenCharacter : public ACharacter
 {
 	GENERATED_BODY()

@@ -10,7 +10,7 @@
 #include "Object.h"
 #include "Skill.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class USkill : public UObject//, public UActivatable
 {
 	GENERATED_BODY()
@@ -24,6 +24,18 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Skill")
 		void Clone();
+
+	UFUNCTION(BlueprintCallable, Category = "Skill")
+		double GetCooldown();
+
+	UFUNCTION(BlueprintCallable, Category = "Skill")
+		void SetCooldown(double newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Skill")
+		FString GetName();
+
+	UFUNCTION(BlueprintCallable, Category = "Skill")
+		void SetName(FString newVal);
 
 private:
 	FString name;

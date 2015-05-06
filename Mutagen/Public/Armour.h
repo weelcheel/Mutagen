@@ -12,7 +12,7 @@
 #include "Armour.generated.h"
 
 
-UCLASS()
+UCLASS(Blueprintable)
 class AArmour : public AItem, public Equipable
 {
 	GENERATED_BODY()
@@ -24,13 +24,13 @@ public:
 		virtual void UnEquip(AMutagenCharacter* entity);
 
 	UFUNCTION(BlueprintCallable, Category = "Equipable")
-	virtual void Equip(AMutagenCharacter* entity);
+		virtual void Equip(AMutagenCharacter* entity);
 
 	UFUNCTION(BlueprintCallable, Category = "Armour")
 		UStat* GetArmourRatng();
 
 	UFUNCTION(BlueprintCallable, Category = "Armour")
-	void SetArmourRatng(UStat* newVal);
+		void SetArmourRatng(UStat* newVal);
 private:
 	UStat* armourRatng;
 

@@ -5,7 +5,7 @@
 //  Original author: sam
 ///////////////////////////////////////////////////////////
 
-UENUM(BlueprintType)
+UENUM(BlueprintType, Blueprintable)
 namespace ItemEnumns
 {
 	enum ItemType

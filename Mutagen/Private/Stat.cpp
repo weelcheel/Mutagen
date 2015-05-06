@@ -30,3 +30,11 @@ FString UStat::GetName(){
 void UStat::SetName(FString newVal){
 	name = newVal;
 }
+
+
+UStat* UStat::CreateStat(FString name, double value){
+	UStat* newStat = ConstructObject<UStat>(UStat::StaticClass());
+	newStat->SetName(name);
+	newStat->SetValue(value);
+	return  newStat;
+}

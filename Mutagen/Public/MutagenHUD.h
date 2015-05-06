@@ -3,7 +3,7 @@
 #include "GameFramework/HUD.h"
 #include "MutagenHUD.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class AMutagenHUD : public AHUD
 {
 	GENERATED_BODY()

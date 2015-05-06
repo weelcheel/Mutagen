@@ -5,7 +5,7 @@
 
 class UInputComponent;
 
-UCLASS(config = Game)
+UCLASS(config = Game, Blueprintable)
 class AMutagenPlayer : public AMutagenCharacter
 {
 	GENERATED_BODY()

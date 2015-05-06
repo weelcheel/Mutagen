@@ -10,7 +10,7 @@
 #include "UnrealString.h"
 #include "Stat.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class UStat : public UObject
 {
 	GENERATED_BODY()
@@ -18,16 +18,89 @@ public:
 	UStat();
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
-	double GetValue();
+		double GetValue();
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
-	void SetValue(double newVal);
+		void SetValue(double newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
-	FString GetName();
+		FString GetName();
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
-	void SetName(FString newVal);
+		void SetName(FString newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Stat")
+	static UStat* CreateStat(FString name, double value);
+
+	FORCEINLINE UStat& operator+(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value + value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE UStat& operator+=(UStat &astat)
+	{
+		value += astat.value;
+
+		return *this;
+	}
+	FORCEINLINE UStat& operator-(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value - value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE UStat& operator-=(UStat &astat)
+	{
+		value -= astat.value;
+
+		return *this;
+	}
+	FORCEINLINE UStat& operator*(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value * value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE UStat& operator*=(UStat &astat)
+	{
+		value *= astat.value;
+
+		return *this;
+	}
+
+	FORCEINLINE UStat& operator/(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value / value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE UStat& operator/=(UStat &astat)
+	{
+		value /= astat.value;
+
+		return *this;
+	}
 
 private:
 	double value;

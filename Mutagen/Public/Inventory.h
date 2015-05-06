@@ -11,7 +11,7 @@
 #include "Object.h"
 #include "Inventory.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class UInventory : public UObject
 {
 	GENERATED_BODY()

@@ -24,7 +24,7 @@ namespace EWeaponState
 #include "Equipable.h"
 #include "Weapon.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class AWeapon : public AItem, public Equipable
 {
 	GENERATED_BODY()

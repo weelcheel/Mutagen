@@ -7,6 +7,10 @@
 
 #include "Mutagen.h"
 #include "MutagenCharacter.h"
+#include "Weapon.h"
+#include "Inventory.h"
+#include "Skill.h"
+#include "Stat.h"
 
 AMutagenCharacter::AMutagenCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){
 
