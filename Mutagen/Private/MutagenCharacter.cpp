@@ -32,6 +32,9 @@ void AMutagenCharacter::BeginPlay()
 }
 
 
+/**
+ * Calculate defensive damage modifers and inflict damage and .
+ */
 float AMutagenCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	//@todo: implement all defensive stat modifers
@@ -42,6 +45,9 @@ float AMutagenCharacter::TakeDamage(float Damage, struct FDamageEvent const& Dam
 }
 
 
+/**
+ * Calculate defensive damage modifers and inflict damage and .
+ */
 void AMutagenCharacter::StartWeaponAttack(){
 	if (!bWantsToAttack)
 	{
@@ -148,6 +154,9 @@ int32 AMutagenCharacter::GetStamina(){
 }
 
 
+/**
+ * Calculate defensive damage modifers and inflict damage and .
+ */
 void AMutagenCharacter::SetStamina(int32 newVal){
 	stamina = newVal;
 }
