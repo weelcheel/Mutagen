@@ -30,68 +30,68 @@ public:
 
 	/**Calculate defensive damage modifers and inflict damage and .*/
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
-	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+		virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 
 	/**
 	 * Calculate defensive damage modifers and inflict damage and .
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
-	void StartWeaponAttack();
+		void StartWeaponAttack();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void StopWeaponAttack();
+		void StopWeaponAttack();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	int32 GetCurrentHealth();
+		int32 GetCurrentHealth();
 
 	UFUNCTION(BlueprintCallable, Category = "Skills")
-	void SetCurrentHealth(int32 newVal);
+		void SetCurrentHealth(int32 newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Skills")
-	int32 GetMaxHealth();
+		int32 GetMaxHealth();
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-	void SetMaxHealth(int32 newVal);
+		void SetMaxHealth(int32 newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-	UInventory* GetInventory();
+		UInventory* GetInventory();
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-	void SetInventory(UInventory* newVal);
+		void SetInventory(UInventory* newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 		TArray<UStat*> GetUnmodifiedStats();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void SetUnmodifiedStats(TArray<UStat*> newVal);
+		void SetUnmodifiedStats(TArray<UStat*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	TArray<UStat*> GetModifiedStats();
+		TArray<UStat*> GetModifiedStats();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-	void SetModifiedStats(TArray<UStat*> newVal);
+		void SetModifiedStats(TArray<UStat*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-	TArray<USkill*> GetSkills();
+		TArray<USkill*> GetSkills();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-	void SetSkills(TArray<USkill*> newVal);
+		void SetSkills(TArray<USkill*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-	TArray<AWeapon*> GetEquipedWeapons();
+		TArray<AWeapon*> GetEquipedWeapons();
 
 	UFUNCTION(BlueprintCallable, Category = "Attack")
-	void SetEquipedWeapons(TArray<AWeapon*> newVal);
+		void SetEquipedWeapons(TArray<AWeapon*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Attack")
-	int32 GetStamina();
+		int32 GetStamina();
 
 	/**
 	 * Calculate defensive damage modifers and inflict damage and .
 	 */
 	UFUNCTION(BlueprintCallable, Category = Damage)
-	void SetStamina(int32 newVal);
+		void SetStamina(int32 newVal);
 
 	TArray<UPassive*> GetPassives();
 	void SetPassives(TArray<UPassive*> newVal);
