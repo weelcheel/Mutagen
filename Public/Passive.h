@@ -27,6 +27,7 @@ public:
 
 	TArray<UEffect*> getEffects();
 	void setEffects(TArray<UEffect*> newVal);
+	void ModifyStat(UStat& stat);
 
 private:
 	TArray<FStatModifier> statModifiers;

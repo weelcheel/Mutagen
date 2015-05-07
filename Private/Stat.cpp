@@ -12,12 +12,12 @@ UStat::UStat(){
 
 }
 
-double UStat::GetValue(){
+float UStat::GetValue(){
 	return value;
 }
 
 
-void UStat::SetValue(double newVal){
+void UStat::SetValue(float newVal){
 	value = newVal;
 }
 
@@ -32,7 +32,7 @@ void UStat::SetName(FString newVal){
 }
 
 
-UStat* UStat::CreateStat(FString name, double value){
+UStat* UStat::CreateStat(FString name, float value){
 	UStat* newStat = ConstructObject<UStat>(UStat::StaticClass());
 	newStat->SetName(name);
 	newStat->SetValue(value);

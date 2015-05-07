@@ -18,10 +18,10 @@ public:
 	UStat();
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
-		double GetValue();
+		float GetValue();
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
-		void SetValue(double newVal);
+		void SetValue(float newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
 		FString GetName();
@@ -30,7 +30,7 @@ public:
 		void SetName(FString newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stat")
-	static UStat* CreateStat(FString name, double value);
+	static UStat* CreateStat(FString name, float value);
 
 	FORCEINLINE UStat& operator+(UStat &astat)
 	{
@@ -103,6 +103,6 @@ public:
 	}
 
 private:
-	double value;
+	float value;
 	FString name;
 };
