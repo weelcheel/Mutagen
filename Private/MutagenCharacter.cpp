@@ -139,3 +139,21 @@ int32 AMutagenCharacter::GetStamina(){
 void AMutagenCharacter::SetStamina(int32 newVal){
 	stamina = newVal;
 }
+
+void AMutagenCharacter::SetCharacterName(FString newName)
+{
+	characterName = newName;
+}
+
+FString AMutagenCharacter::GetCharacterName()
+{
+	if (GetController())
+	{
+		// get the player name instead of the character name
+		return "Player";
+	}
+	else
+	{
+		return characterName;
+	}
+}

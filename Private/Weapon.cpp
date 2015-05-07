@@ -46,7 +46,8 @@ void AWeapon::UnEquip(AMutagenCharacter* entity) {
 		StopWeaponAnimation(equipAnimation);
 		bPendingEquip = false;
 
-		GetWorldTimerManager().ClearTimer(this, &AWeapon::OnEquipFinished);
+		//GetWorldTimerManager().ClearTimer(this, &AWeapon::OnEquipFinished);
+		GetWorldTimerManager().ClearTimer(equipTimerHandle);
 	}
 
 	DetermineWeaponState();
@@ -66,7 +67,8 @@ void AWeapon::Equip(AMutagenCharacter* entity){
 	EquipStartedTime = GetWorld()->GetTimeSeconds();
 	EquipDuration = duration;
 
-	GetWorldTimerManager().SetTimer(this, &AWeapon::OnEquipFinished, duration, false);
+	//GetWorldTimerManager().SetTimer(this, &AWeapon::OnEquipFinished, duration, false);
+	GetWorldTimerManager().SetTimer(equipTimerHandle, this, &AWeapon::OnEquipFinished, duration, false);
 
 	if (GetItemOwner() && GetItemOwner()->IsLocallyControlled())
 	{

@@ -18,10 +18,20 @@ class AMutagenCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-		virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
+
+	/** variable that contains the character's in-game name (useful for UI) */
+	UPROPERTY(EditDefaultsOnly, Category=Name)
+	FString characterName;
 
 public:
 	AMutagenCharacter(const FObjectInitializer& ObjectInitializer);
+
+	UFUNCTION(BlueprintCallable, Category = Name)
+	void SetCharacterName(FString newName);
+
+	UFUNCTION(BlueprintCallable, Category = Name)
+	FString GetCharacterName();
 
 	/**Calculate defensive damage modifers and inflict damage and .*/
 	UFUNCTION(BlueprintCallable, Category = Damage)
