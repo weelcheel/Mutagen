@@ -12,8 +12,9 @@ USkill::USkill(){
 
 }
 
-void USkill::Activate(){
-
+void USkill::Activate()
+{
+	HandleActivation();
 }
 
 

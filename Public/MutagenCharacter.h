@@ -81,6 +81,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
 	void SetStamina(int32 newVal);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
+	virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
+
 private:
 	int32 maxHealth;
 	int32 currentHealth;

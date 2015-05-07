@@ -29,6 +29,75 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Stat")
 	void SetName(FString newVal);
 
+	FORCEINLINE		UStat&		operator+(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value + value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE		UStat&		operator+=(UStat &astat)
+	{
+		value += astat.value;
+
+		return *this;
+	}
+	FORCEINLINE		UStat&		operator-(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value - value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE		UStat&		operator-=(UStat &astat)
+	{
+		value -= astat.value;
+
+		return *this;
+	}
+	FORCEINLINE		UStat&		operator*(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value * value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE		UStat&		operator*=(UStat &astat)
+	{
+		value *= astat.value;
+
+		return *this;
+	}
+	FORCEINLINE		UStat&		operator/(UStat &astat)
+	{
+		UStat* nstat = ConstructObject<UStat>(UStat::StaticClass());
+		if (nstat)
+		{
+			nstat->value = astat.value / value;
+		}
+
+		return *nstat;
+	}
+
+	FORCEINLINE		UStat&		operator/=(UStat &astat)
+	{
+		value /= astat.value;
+
+		return *this;
+	}
+
 private:
 	double value;
 	FString name;

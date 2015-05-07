@@ -9,7 +9,11 @@ AMutagenGameMode::AMutagenGameMode(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	// Set default pawn class to our Blueprinted character
-	DefaultPawnClass = AMutagenPlayer::StaticClass();
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/Mutagen/Blueprints/Character/DemoPlayer"));
+	if (PlayerPawnClassFinder.Succeeded())
+	{
+		DefaultPawnClass = PlayerPawnClassFinder.Class;
+	}
 
 	// use our custom HUD class
 	HUDClass = AMutagenHUD::StaticClass();

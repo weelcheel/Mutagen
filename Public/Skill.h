@@ -18,12 +18,15 @@ class USkill : public UObject//, public UActivatable
 public:
 	USkill();
 
+	/** called from Activate() to give an event hook in Blueprints */
+	UFUNCTION(BlueprintImplementableEvent, Category = Skill)
+	void HandleActivation();
 
 	UFUNCTION(BlueprintCallable, Category = "Skill")
-		void Activate();
+	void Activate();
 
 	UFUNCTION(BlueprintCallable, Category = "Skill")
-		void Clone();
+	void Clone();
 
 private:
 	FString name;
