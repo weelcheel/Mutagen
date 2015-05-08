@@ -14,9 +14,8 @@ public:
 	/** Primary draw call for the HUD */
 	virtual void DrawHUD() override;
 
-private:
-	/** Crosshair asSet pointer */
-	class UTexture2D* CrosshairTex;
+	/** overidden so that we can post render actors for HUD */
+	void BeginPlay() override;
 
 };
 

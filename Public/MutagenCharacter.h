@@ -29,8 +29,18 @@ class AMutagenCharacter : public ACharacter
 
 		virtual void BeginPlay() override;
 
+	/** variable that contains the character's in-game name (useful for UI) */
+	UPROPERTY(EditDefaultsOnly, Category=Name)
+	FString characterName;
+
 public:
 	AMutagenCharacter(const FObjectInitializer& ObjectInitializer);
+
+	UFUNCTION(BlueprintCallable, Category = Name)
+	void SetCharacterName(FString newName);
+
+	UFUNCTION(BlueprintCallable, Category = Name)
+	FString GetCharacterName();
 
 	/**Calculate defensive damage modifers and inflict damage and .*/
 	UFUNCTION(BlueprintCallable, Category = "Damage")
@@ -88,13 +98,13 @@ public:
 		TArray<USkill*> GetSkills();
 
 	UFUNCTION(BlueprintCallable, Category = "Skills")
-		void SetSkills(TArray<USkill*> newVal);
+	void SetSkills(TArray<USkill*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		TArray<AWeapon*> GetEquipedWeapons();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void SetEquipedWeapons(TArray<AWeapon*> newVal);
+	void SetEquipedWeapons(TArray<AWeapon*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
 		int32 GetStamina();
@@ -103,7 +113,7 @@ public:
 	 * Calculate defensive damage modifers and inflict damage and .
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
-		void SetStamina(int32 newVal);
+	void SetStamina(int32 newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Passives")
 		TArray<UPassive*> GetPassives();
@@ -117,6 +127,9 @@ public:
 	void AddStat(UStat& inStat);
 	void AddStat(FString name, float value);
 	UStat* GetUnModifiedStat(FString name);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
+		virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
 private:
 	int32 maxHealth;
 	int32 currentHealth;

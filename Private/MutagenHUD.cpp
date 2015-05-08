@@ -5,12 +5,11 @@
 #include "Engine/Canvas.h"
 #include "TextureResource.h"
 #include "CanvasItem.h"
+#include "Engine.h"
 
 AMutagenHUD::AMutagenHUD(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	// Set the crosshair texture
-	static ConstructorHelpers::FObjectFinder<UTexture2D> CrosshiarTexObj(TEXT("/Game/FirstPerson/Textures/FirstPersonCrosshair"));
-	CrosshairTex = CrosshiarTexObj.Object;
+	bShowOverlays = true;
 }
 
 
@@ -18,18 +17,16 @@ void AMutagenHUD::DrawHUD()
 {
 	Super::DrawHUD();
 
-	// Draw very simple crosshair
-
-	// find center of the Canvas
-	const FVector2D Center(Canvas->ClipX * 0.5f, Canvas->ClipY * 0.5f);
-
-	// offSet by half the texture's dimensions so that the center of the texture aligns with the center of the Canvas
-	const FVector2D CrosshairDrawPosition( (Center.X - (CrosshairTex->GetSurfaceWidth() * 0.5)),
-										   (Center.Y - (CrosshairTex->GetSurfaceHeight() * 0.5f)) );
-
-	// draw the crosshair
-	FCanvasTileItem TileItem( CrosshairDrawPosition, CrosshairTex->Resource, FLinearColor::White);
-	TileItem.BlendMode = SE_BLEND_Translucent;
-	Canvas->DrawItem( TileItem );
+	
 }
 
+void AMutagenHUD::BeginPlay()
+{
+	Super::BeginPlay();
+
+	//add every character to be able to post render info about them
+	for (TActorIterator<AMutagenCharacter> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AddPostRenderedActor(*ActorItr);
+	}
+}

@@ -102,6 +102,8 @@ public:
 		return *this;
 	}
 
+
+
 private:
 	float value;
 	FString name;

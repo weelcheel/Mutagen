@@ -95,19 +95,30 @@ void AMutagenPlayer::TouchStopped(ETouchIndex::Type FingerIndex, FVector Locatio
 
 void AMutagenPlayer::MoveForward(float Value)
 {
-	if (Value != 0.0f)
+	if ((Controller != NULL) && (Value != 0.0f))
 	{
-		// add movement in that direction
-		AddMovementInput(GetActorForwardVector(), Value);
+		// find out which way is forward
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		// get forward vector
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Value);
 	}
 }
 
 void AMutagenPlayer::MoveRight(float Value)
 {
-	if (Value != 0.0f)
+	if ((Controller != NULL) && (Value != 0.0f))
 	{
+		// find out which way is right
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		// get right vector 
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
-		AddMovementInput(GetActorRightVector(), Value);
+		AddMovementInput(Direction, Value);
 	}
 }
 

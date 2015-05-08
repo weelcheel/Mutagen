@@ -148,6 +148,9 @@ private:
 
 	/**Weapon mesh.*/
 	USkeletalMeshComponent* weaponMesh;
+
+	/** timer reference for the fire timer */
+	FTimerHandle equipTimerHandle;
 protected:
 
 	/**
