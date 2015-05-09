@@ -33,6 +33,11 @@ class AMutagenCharacter : public ACharacter
 	UPROPERTY(EditDefaultsOnly, Category=Name)
 	FString characterName;
 
+protected:
+
+	/** called when the character's health reaches 0 */
+	virtual void Died();
+
 public:
 	AMutagenCharacter(const FObjectInitializer& ObjectInitializer);
 

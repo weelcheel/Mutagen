@@ -21,7 +21,7 @@ AMutagenCharacter::AMutagenCharacter(const FObjectInitializer& ObjectInitializer
 	SetCurrentHealth(100);
 	SetMaxHealth(100);
 	SetInventory(ConstructObject<UInventory>(UInventory::StaticClass()));
-
+	
 }
 
 void AMutagenCharacter::BeginPlay()
@@ -142,7 +142,13 @@ float AMutagenCharacter::TakeDamage(float Damage, struct FDamageEvent const& Dam
 {
 	//@todo: implement all defensive stat modifers
 
-	currentHealth -= Damage;
+	if (currentHealth - Damage <= 0)
+	{
+		currentHealth = 0;
+		Died();
+	}
+	else
+		currentHealth -= Damage;
 
 	return Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 }
@@ -289,4 +295,9 @@ TArray<UPassive*> AMutagenCharacter::GetPassives(){
 void AMutagenCharacter::SetPassives(TArray<UPassive*> newVal){
 
 	passives = newVal;
+}
+
+void AMutagenCharacter::Died()
+{
+
 }
