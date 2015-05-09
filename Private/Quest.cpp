@@ -19,6 +19,10 @@ UQuest* UQuest::CreateQuest(AMutagenCharacter* character, TArray<UQuestObjective
 void UQuest::ObjectiveUpdated(UQuestObjective* objective){
 	if (objective->IsComplete() && IsComplete()){
 		GiveRewards();
+
+		if (OnQuestCompleted.IsBound()){
+			OnQuestCompleted.Broadcast(this);
+		}
 	}
 }
 

@@ -21,7 +21,7 @@ AMutagenCharacter::AMutagenCharacter(const FObjectInitializer& ObjectInitializer
 	SetCurrentHealth(100);
 	SetMaxHealth(100);
 	SetInventory(ConstructObject<UInventory>(UInventory::StaticClass()));
-	
+
 }
 
 void AMutagenCharacter::BeginPlay()
@@ -30,9 +30,7 @@ void AMutagenCharacter::BeginPlay()
 
 	SetCurrentHealth(GetMaxHealth());
 
-	if (OnCharacterDeathEvent.IsBound()){
-		OnCharacterDeathEvent.Broadcast(this);
-	}
+
 }
 
 /* This method is used to get the actual value of stats
@@ -142,13 +140,14 @@ float AMutagenCharacter::TakeDamage(float Damage, struct FDamageEvent const& Dam
 {
 	//@todo: implement all defensive stat modifers
 
-	if (currentHealth - Damage <= 0)
-	{
-		currentHealth = 0;
-		Died();
-	}
-	else
+	if (currentHealth > 0) {
 		currentHealth -= Damage;
+
+		if (currentHealth <= 0)
+		{
+			Died();
+		}
+	}
 
 	return Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 }
@@ -299,5 +298,7 @@ void AMutagenCharacter::SetPassives(TArray<UPassive*> newVal){
 
 void AMutagenCharacter::Died()
 {
-
+	if (OnCharacterDeathEvent.IsBound()){
+		OnCharacterDeathEvent.Broadcast(this);
+	}
 }

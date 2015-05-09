@@ -6,20 +6,26 @@
 #include "QuestReward.generated.h"
 
 /**
- * 
+ *
  */
-UCLASS()
+UCLASS(Blueprintable)
 class MUTAGEN_API UQuestReward : public UObject
 {
 	GENERATED_BODY()
 private:
 	TArray<AItem*> rewards;
 
-		
-
 public:
-	void GiveReward(AMutagenCharacter* questOwner);
-	UQuestReward* CreateQuestReward();
-	TArray<AItem*> GetRewards();
-	void SetRewards(TArray<AItem*> newVal);
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		void GiveReward(AMutagenCharacter* questOwner);
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		UQuestReward* CreateQuestReward();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		TArray<AItem*> GetRewards();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		void SetRewards(TArray<AItem*> newVal);
 };
