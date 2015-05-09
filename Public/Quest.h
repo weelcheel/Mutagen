@@ -14,6 +14,10 @@ class MUTAGEN_API UQuest : public UObject
 {
 	GENERATED_BODY()
 private:
+
+	/** quest name */
+	FString questName;
+
 	TArray<UQuestReward*> rewards;
 	TArray<UQuestObjective*> objectives;
 	AMutagenCharacter* owner;
@@ -28,7 +32,8 @@ public:
 	TArray<UQuestObjective*> GetObjectives();
 	void SetObjectives(TArray<UQuestObjective*> newVal);
 
-	UQuest* CreateQuest(AMutagenCharacter* character, TArray<UQuestObjective*> objectives = *new TArray<UQuestObjective*>(), TArray<UQuestReward*> rewards = *new TArray<UQuestReward*>());
+	UFUNCTION(BlueprintCallable, Category=Quest)
+	static UQuest* CreateQuest(AMutagenCharacter* character, TArray<UQuestObjective*> objectives, TArray<UQuestReward*> rewards, FString qName = "Default Quest");
 
 	void ObjectiveUpdated(UQuestObjective* objective);
 	bool IsComplete();
@@ -36,4 +41,13 @@ public:
 	void AddObjective(UQuestObjective* inObjective);
 	void AddReward(UQuestReward* inReward);
 	void GiveRewards();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+	FString GetQuestName();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+	void SetQuestName(FString newName);
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+	UQuestObjective* GetFirstObjective();
 };

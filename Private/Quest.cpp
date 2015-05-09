@@ -6,11 +6,12 @@
 #include "QuestObjective.h"
 
 /* Creates a new quest with the givin parameters, the last two are optional */
-UQuest* UQuest::CreateQuest(AMutagenCharacter* character, TArray<UQuestObjective*> objectives, TArray<UQuestReward*> rewards){
+UQuest* UQuest::CreateQuest(AMutagenCharacter* character, TArray<UQuestObjective*> objectives, TArray<UQuestReward*> rewards, FString qName){
 	UQuest* tempQuest = ConstructObject<UQuest>(UQuest::StaticClass());
 	tempQuest->SetOwner(character);
 	tempQuest->SetObjectives(objectives);
 	tempQuest->SetRewards(rewards);
+	tempQuest->SetQuestName(qName);
 	return tempQuest;
 }
 
@@ -84,4 +85,24 @@ TArray<UQuestObjective*> UQuest::GetObjectives(){
 
 void UQuest::SetObjectives(TArray<UQuestObjective*> newVal){
 	objectives = newVal;
+}
+
+FString UQuest::GetQuestName()
+{
+	return questName;
+}
+
+void UQuest::SetQuestName(FString newName)
+{
+	questName = newName;
+}
+
+UQuestObjective* UQuest::GetFirstObjective()
+{
+	if (objectives.Num() > 0)
+	{
+		return objectives[0];
+	}
+
+	return NULL;
 }

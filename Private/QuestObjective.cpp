@@ -35,10 +35,10 @@ void UQuestObjective::SetQuest(UQuest* newVal){
 }
 
 
-UQuestObjective* UQuestObjective::CreateQuestObjective(){
+UQuestObjective* UQuestObjective::CreateQuestObjective(FString oText){
 	UQuestObjective* tempQuestObjective = ConstructObject<UQuestObjective>(UQuestObjective::StaticClass());
+	tempQuestObjective->SetObjectiveText(oText);
 	return tempQuestObjective;
-
 }
 
 
@@ -46,4 +46,14 @@ void UQuestObjective::NotifyQuest(){
 	if (GetQuest() != NULL){
 		GetQuest()->ObjectiveUpdated(this);
 	}
+}
+
+FString UQuestObjective::GetObjectiveText()
+{
+	return objectiveText;
+}
+
+void UQuestObjective::SetObjectiveText(FString newName)
+{
+	objectiveText = newName;
 }
