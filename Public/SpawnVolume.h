@@ -11,17 +11,22 @@
 
 class ASpawnPoint;
 
-UCLASS()
+UCLASS(Blueprintable)
 class MUTAGEN_API ASpawnVolume : public AVolume
 {
 	GENERATED_BODY()
 
 public:
+	virtual void BeginPlay() override;
+
 	UFUNCTION(BlueprintCallable, Category = "Spawn Volume")
 		TArray<ASpawnPoint*> GetSpawnPoints();
 
 	UFUNCTION(BlueprintCallable, Category = "Spawn Volume")
 		void SetSpawnPoints(TArray<ASpawnPoint*> newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Spawn Volume")
+		void Spawn();
 
 private:
 	TArray<ASpawnPoint*> spawnPoints;

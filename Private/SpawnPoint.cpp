@@ -8,16 +8,13 @@
 #include "Mutagen.h"
 #include "SpawnPoint.h"
 
-
-
-
 /**
  * Sets default values for this actor's properties
  */
 ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer){
 
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-		PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 
@@ -26,6 +23,15 @@ ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer){
  */
 void ASpawnPoint::BeginPlay(){
 	Super::BeginPlay();
+}
+
+void ASpawnPoint::EntityDied(AMutagenCharacter* entityInvolved){
+	GetWorldTimerManager().SetTimer(this, &ASpawnPoint::Spawn, GetCooldown());
+}
+
+void ASpawnPoint::Spawn(){
+	AMutagenCharacter* entity = GetWorld()->SpawnActor<AMutagenCharacter>(GetCharacterClass(), GetActorLocation(), GetActorRotation());
+	entity->OnCharacterDeathEvent.AddDynamic(this, &ASpawnPoint::EntityDied);
 }
 
 
@@ -54,4 +60,15 @@ bool ASpawnPoint::IsOnCooldown(){
 
 void ASpawnPoint::SetOnCooldown(bool newVal){
 	onCooldown = newVal;
+}
+
+
+
+UClass* ASpawnPoint::GetCharacterClass(){
+	return characterClass;
+}
+
+
+void ASpawnPoint::SetCharacterClass(UClass* newVal){
+	characterClass = newVal;
 }

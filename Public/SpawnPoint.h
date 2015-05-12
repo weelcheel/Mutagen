@@ -8,7 +8,7 @@
 #pragma once
 #include "SpawnPoint.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class MUTAGEN_API ASpawnPoint : public AActor
 {
 	GENERATED_BODY()
@@ -39,7 +39,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
 		void SetOnCooldown(bool newVal);
 
+	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
+		void Spawn();
+
+	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
+		UClass* GetCharacterClass();
+
+	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
+		void SetCharacterClass(UClass* newVal);
+
+	void EntityDied(AMutagenCharacter* entityInvolved);
+
 private:
 	float cooldown;
 	bool onCooldown;
+	UClass* characterClass = AMutagenCharacter::StaticClass();
 };
