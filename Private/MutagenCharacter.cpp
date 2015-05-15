@@ -8,7 +8,7 @@
 #include "Mutagen.h"
 #include "MutagenCharacter.h"
 #include "Weapon.h"
-#include "Inventory.h"
+#include "Inventory.h" 
 #include "Skill.h"
 #include "Stat.h"
 #include "Passive.h"
@@ -21,16 +21,14 @@ AMutagenCharacter::AMutagenCharacter(const FObjectInitializer& ObjectInitializer
 	SetCurrentHealth(100);
 	SetMaxHealth(100);
 	SetInventory(ConstructObject<UInventory>(UInventory::StaticClass()));
-
+	maxHealthName = "MaxHealth";
+	staminaName = "Stamina";
 }
 
 void AMutagenCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
 	SetCurrentHealth(GetMaxHealth());
-
-
 }
 
 /* This method is used to get the actual value of stats
@@ -56,28 +54,26 @@ UStat* AMutagenCharacter::GetModifiedStat(FString name){
 			break;
 		}
 	}
-
-
 	return &tempStat;
 }
 
 /* Checks all stats and modifies them with the current passives, returns the results */
-TArray<UStat*> AMutagenCharacter::GetModifiedStats(bool update = true){
-	if(update) {
+TArray<UStat*> AMutagenCharacter::GetModifiedStats(bool update = false){
+	if (update) {
 		TArray<UStat*> tempStats = *new TArray<UStat*>();
-	
+
 		for (UStat* stat : GetUnmodifiedStats()){
 			//Create a temp stat to add to the array
 			UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
-	
+
 			// Copy the values
 			tempStat += *stat;
 			tempStat.SetName(stat->GetName());
-	
+
 			// Modify the stat then add it to the array
 			tempStats.Add(GetModifiedStat(tempStat));
 		}
-	
+
 		// Set the ModifiedStats array to this, to keep a record of it
 		// GetModifiedStats() should be called every time a pssive is added, removed, changed etc to keep the array up to date
 		SetModifiedStats(tempStats);
@@ -96,7 +92,7 @@ UStat* AMutagenCharacter::GetUnModifiedStat(FString name){
 	for (UStat* stat : GetUnmodifiedStats()){
 
 		// Does the stat matches the stat we're looking for 
-		if (stat->GetName().Equals(name)){
+		if (stat->GetName().Equals(name)) {
 			return stat;
 		}
 	}
@@ -105,15 +101,17 @@ UStat* AMutagenCharacter::GetUnModifiedStat(FString name){
 
 
 /* Loops through all passives getting them to manipulate the stat, if at all */
-void AMutagenCharacter::ModifyStat(UStat& inStat){
+UStat* AMutagenCharacter::ModifyStat(UStat& inStat){
 	for (UPassive* passive : GetPassives()) {
 		passive->ModifyStat(inStat);
 	}
+
+	return &inStat;
 }
 
 
 /*Adds a stat to the current unmodifiedStats, if the stat exists then it increases it's value by the in Stats' value */
-void AMutagenCharacter::AddStat(UStat& inStat){
+UStat* AMutagenCharacter::AddStat(UStat& inStat){
 	UStat* tempStat = GetUnModifiedStat(inStat.GetName());
 	if (tempStat != NULL){
 		*tempStat += inStat;
@@ -121,18 +119,21 @@ void AMutagenCharacter::AddStat(UStat& inStat){
 	else {
 		unmodifiedStats.Add(&inStat);
 	}
+
+	return &inStat;
 }
 
 /*Adds a new stat to unmodifiedStats using ConstructObject and then AddStat */
-void AMutagenCharacter::AddStat(FString name, float value){
+UStat* AMutagenCharacter::AddStat(FString name, float value){
 	UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
 
 	// Copy the values
 	tempStat.SetValue(value);
 	tempStat.SetName(name);
 	AddStat(tempStat);
-}
 
+	return &tempStat;
+}
 
 /**
  * Calculate defensive damage modifers and inflict damage and .
@@ -153,7 +154,6 @@ float AMutagenCharacter::TakeDamage(float Damage, struct FDamageEvent const& Dam
 	return Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
 }
 
-
 /**
  * Calculate defensive damage modifers and inflict damage and .
  */
@@ -172,7 +172,6 @@ void AMutagenCharacter::StartWeaponAttack(){
 	}
 }
 
-
 void AMutagenCharacter::StopWeaponAttack(){
 	if (bWantsToAttack)
 	{
@@ -188,84 +187,69 @@ void AMutagenCharacter::StopWeaponAttack(){
 	}
 }
 
-
 int32 AMutagenCharacter::GetCurrentHealth(){
 	return currentHealth;
 }
-
 
 void AMutagenCharacter::SetCurrentHealth(int32 newVal){
 	currentHealth = newVal;
 }
 
-
 int32 AMutagenCharacter::GetMaxHealth(){
-	return maxHealth;
+	return GetModifiedStat(maxHealthName)->GetValue();
 }
-
 
 void AMutagenCharacter::SetMaxHealth(int32 newVal){
-	maxHealth = newVal;
+	AddStat(maxHealthName, newVal);
 }
-
 
 UInventory* AMutagenCharacter::GetInventory(){
 	return inventory;
 }
 
-
 void AMutagenCharacter::SetInventory(UInventory* newVal){
 	inventory = newVal;
 }
-
 
 TArray<UStat*> AMutagenCharacter::GetUnmodifiedStats(){
 	return unmodifiedStats;
 }
 
-
 void AMutagenCharacter::SetUnmodifiedStats(TArray<UStat*> newVal){
 	unmodifiedStats = newVal;
 }
-
-
-
 
 void AMutagenCharacter::SetModifiedStats(TArray<UStat*> newVal){
 	modifiedStats = newVal;
 }
 
-
 TArray<USkill*> AMutagenCharacter::GetSkills(){
 	return skills;
 }
-
 
 void AMutagenCharacter::SetSkills(TArray<USkill*> newVal){
 	skills = newVal;
 }
 
-
 TArray<AWeapon*> AMutagenCharacter::GetEquipedWeapons(){
 	return equipedWeapons;
 }
-
 
 void AMutagenCharacter::SetEquipedWeapons(TArray<AWeapon*> newVal){
 	equipedWeapons = newVal;
 }
 
-
 int32 AMutagenCharacter::GetStamina(){
-	return stamina;
+	return GetModifiedStat(staminaName)->GetValue();
 }
-
 
 /**
  * Calculate defensive damage modifers and inflict damage and .
  */
 void AMutagenCharacter::SetStamina(int32 newVal){
-	stamina = newVal;
+	if (GetModifiedStat(staminaName)->GetValue() == 0){
+		AddStat(staminaName, newVal);
+	}
 }
 
 void AMutagenCharacter::SetCharacterName(FString newName)
@@ -287,13 +271,11 @@ FString AMutagenCharacter::GetCharacterName()
 }
 
 TArray<UPassive*> AMutagenCharacter::GetPassives(){
-
 	return passives;
 }
 
 
 void AMutagenCharacter::SetPassives(TArray<UPassive*> newVal){
-
 	passives = newVal;
 }
 
