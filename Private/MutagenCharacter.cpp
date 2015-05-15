@@ -62,26 +62,27 @@ UStat* AMutagenCharacter::GetModifiedStat(FString name){
 }
 
 /* Checks all stats and modifies them with the current passives, returns the results */
-TArray<UStat*> AMutagenCharacter::GetModifiedStats(){
-	TArray<UStat*> tempStats = *new TArray<UStat*>();
-
-	for (UStat* stat : GetUnmodifiedStats()){
-		//Create a temp stat to add to the array
-		UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
-
-		// Copy the values
-		tempStat += *stat;
-		tempStat.SetName(stat->GetName());
-
-		// Modify the stat then add it to the array
-		tempStats.Add(GetModifiedStat(tempStat));
+TArray<UStat*> AMutagenCharacter::GetModifiedStats(bool update = true){
+	if(update) {
+		TArray<UStat*> tempStats = *new TArray<UStat*>();
+	
+		for (UStat* stat : GetUnmodifiedStats()){
+			//Create a temp stat to add to the array
+			UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
+	
+			// Copy the values
+			tempStat += *stat;
+			tempStat.SetName(stat->GetName());
+	
+			// Modify the stat then add it to the array
+			tempStats.Add(GetModifiedStat(tempStat));
+		}
+	
+		// Set the ModifiedStats array to this, to keep a record of it
+		// GetModifiedStats() should be called every time a pssive is added, removed, changed etc to keep the array up to date
+		SetModifiedStats(tempStats);
 	}
-
-	// Set the ModifiedStats array to this, to keep a record of it
-	// GetModifiedStats() should be called every time a pssive is added, removed, changed etc to keep the array up to date
-	SetModifiedStats(tempStats);
-
-	return tempStats;
+	return GetModifiedStats();
 }
 
 /* This is used to get a modified version of a stat  */
