@@ -6,17 +6,15 @@
 ///////////////////////////////////////////////////////////
 
 #pragma once
+#include "Engine/TargetPoint.h"
 #include "SpawnPoint.generated.h"
 
 UCLASS()
-class MUTAGEN_API ASpawnPoint : public AActor
+class MUTAGEN_API ASpawnPoint : public ATargetPoint
 {
-	GENERATED_BODY()
+	GENERATED_UCLASS_BODY()
 public:
-	/**
-	 * Sets default values for this actor's properties
-	 */
-	ASpawnPoint(const FObjectInitializer& ObjectInitializer);
+
 	/**
 	 * Called when the game starts or when spawned
 	 */
@@ -39,7 +37,27 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
 		void SetOnCooldown(bool newVal);
 
+	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
+		void Spawn();
+
+	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
+	UClass* GetCharacterClass();
+
+	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
+		void SetCharacterClass(TSubclassOf<AMutagenCharacter> newClass);
+
+	UFUNCTION()
+	void EntityDied(AMutagenCharacter* entityInvolved);
+
+	FTimerHandle spawnTimer;
+
 private:
 	float cooldown;
 	bool onCooldown;
+
+	UPROPERTY(EditAnywhere, Category = "Spawn Point")
+	TSubclassOf<AMutagenCharacter> characterClass;
+
+	UPROPERTY(VisibleAnywhere, Category = "Spawn Point")
+	UCapsuleComponent* spawnCapsule;
 };

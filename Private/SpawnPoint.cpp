@@ -8,16 +8,21 @@
 #include "Mutagen.h"
 #include "SpawnPoint.h"
 
-
-
-
 /**
  * Sets default values for this actor's properties
  */
-ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer){
+ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
 
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 		PrimaryActorTick.bCanEverTick = true;
+
+		spawnCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("spawnCollision"));
+		spawnCapsule->InitCapsuleSize(34.0f, 88.0f);
+		spawnCapsule->SetCollisionResponseToAllChannels(ECR_Overlap);
+
+		RootComponent = spawnCapsule;
 }
 
 
@@ -28,6 +33,19 @@ void ASpawnPoint::BeginPlay(){
 	Super::BeginPlay();
 }
 
+void ASpawnPoint::EntityDied(AMutagenCharacter* entityInvolved)
+{
+	GetWorldTimerManager().SetTimer(spawnTimer, this, &ASpawnPoint::Spawn, GetCooldown());
+}
+
+void ASpawnPoint::Spawn()
+{
+	AMutagenCharacter* entity = GetWorld()->SpawnActor<AMutagenCharacter>(GetCharacterClass(), GetActorLocation(), GetActorRotation());
+	if (entity)
+	{
+		entity->OnCharacterDeathEvent.AddDynamic(this, &ASpawnPoint::EntityDied);
+	}
+}
 
 /**
  * Called every frame
@@ -54,4 +72,14 @@ bool ASpawnPoint::IsOnCooldown(){
 
 void ASpawnPoint::SetOnCooldown(bool newVal){
 	onCooldown = newVal;
+}
+
+UClass* ASpawnPoint::GetCharacterClass()
+{
+	return characterClass;
+}
+
+void ASpawnPoint::SetCharacterClass(TSubclassOf<AMutagenCharacter> newClass)
+{
+	characterClass = newClass;
 }
