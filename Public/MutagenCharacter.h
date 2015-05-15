@@ -94,7 +94,7 @@ public:
 		void SetUnmodifiedStats(TArray<UStat*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-		TArray<UStat*> GetModifiedStats();
+		TArray<UStat*> GetModifiedStats(bool update);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 		void SetModifiedStats(TArray<UStat*> newVal);
