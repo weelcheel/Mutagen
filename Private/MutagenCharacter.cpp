@@ -35,7 +35,7 @@ void AMutagenCharacter::BeginPlay()
 	This currenty checks all passives to see if the stat needs to be change, + or -
 	If the stat isn't found then it will default to 0 and the passives could make it -
 	*/
-UStat* AMutagenCharacter::GetModifiedStat(FString name){
+UStat* AMutagenCharacter::GetModifiedStatByName(FString name){
 	// Create a tempory stat to send back
 	UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
 	tempStat.SetValue(0);
@@ -50,7 +50,7 @@ UStat* AMutagenCharacter::GetModifiedStat(FString name){
 			tempStat += *stat;
 
 			// Modify the stat with passives
-			ModifyStat(tempStat);
+			ModifyStat(&tempStat);
 			break;
 		}
 	}
@@ -71,20 +71,20 @@ TArray<UStat*> AMutagenCharacter::GetModifiedStats(bool update = false){
 			tempStat.SetName(stat->GetName());
 
 			// Modify the stat then add it to the array
-			tempStats.Add(GetModifiedStat(tempStat));
+			tempStats.Add(GetModifiedStat(&tempStat));
 		}
 
 		// Set the ModifiedStats array to this, to keep a record of it
 		// GetModifiedStats() should be called every time a pssive is added, removed, changed etc to keep the array up to date
 		SetModifiedStats(tempStats);
 	}
-	return GetModifiedStats();
+	return modifiedStats;
 }
 
 /* This is used to get a modified version of a stat  */
-UStat* AMutagenCharacter::GetModifiedStat(UStat& inStat){
+UStat* AMutagenCharacter::GetModifiedStat(UStat* inStat){
 	ModifyStat(inStat);
-	return &inStat;
+	return inStat;
 }
 
 UStat* AMutagenCharacter::GetUnModifiedStat(FString name){
@@ -101,36 +101,36 @@ UStat* AMutagenCharacter::GetUnModifiedStat(FString name){
 
 
 /* Loops through all passives getting them to manipulate the stat, if at all */
-UStat* AMutagenCharacter::ModifyStat(UStat& inStat){
+UStat* AMutagenCharacter::ModifyStat(UStat* inStat){
 	for (UPassive* passive : GetPassives()) {
-		passive->ModifyStat(inStat);
+		passive->ModifyStat(*inStat);
 	}
 
-	return &inStat;
+	return inStat;
 }
 
 
 /*Adds a stat to the current unmodifiedStats, if the stat exists then it increases it's value by the in Stats' value */
-UStat* AMutagenCharacter::AddStat(UStat& inStat){
-	UStat* tempStat = GetUnModifiedStat(inStat.GetName());
+UStat* AMutagenCharacter::AddStat(UStat* inStat){
+	UStat* tempStat = GetUnModifiedStat(inStat->GetName());
 	if (tempStat != NULL){
-		*tempStat += inStat;
+		*tempStat += *inStat;
 	}
 	else {
-		unmodifiedStats.Add(&inStat);
+		unmodifiedStats.Add(inStat);
 	}
 
-	return &inStat;
+	return inStat;
 }
 
 /*Adds a new stat to unmodifiedStats using ConstructObject and then AddStat */
-UStat* AMutagenCharacter::AddStat(FString name, float value){
+UStat* AMutagenCharacter::AddNewStat(FString name, float value){
 	UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
 
 	// Copy the values
 	tempStat.SetValue(value);
 	tempStat.SetName(name);
-	AddStat(tempStat);
+	AddStat(&tempStat);
 
 	return &tempStat;
 }
@@ -196,11 +196,11 @@ void AMutagenCharacter::SetCurrentHealth(int32 newVal){
 }
 
 int32 AMutagenCharacter::GetMaxHealth(){
-	return GetModifiedStat(maxHealthName)->GetValue();
+	return GetModifiedStatByName(maxHealthName)->GetValue();
 }
 
 void AMutagenCharacter::SetMaxHealth(int32 newVal){
-	AddStat(maxHealthName, newVal);
+	AddNewStat(maxHealthName, newVal);
 }
 
 UInventory* AMutagenCharacter::GetInventory(){
@@ -240,15 +240,15 @@ void AMutagenCharacter::SetEquipedWeapons(TArray<AWeapon*> newVal){
 }
 
 int32 AMutagenCharacter::GetStamina(){
-	return GetModifiedStat(staminaName)->GetValue();
+	return GetModifiedStatByName(staminaName)->GetValue();
 }
 
 /**
  * Calculate defensive damage modifers and inflict damage and .
  */
 void AMutagenCharacter::SetStamina(int32 newVal){
-	if (GetModifiedStat(staminaName)->GetValue() == 0){
-		AddStat(staminaName, newVal);
+	if (GetModifiedStatByName(staminaName)->GetValue() == 0){
+		AddNewStat(staminaName, newVal);
 	}
 }
 

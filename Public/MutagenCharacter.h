@@ -41,13 +41,16 @@ protected:
 public:
 	AMutagenCharacter(const FObjectInitializer& ObjectInitializer);
 
-	FString maxHealthName;
-	FString staminaName;
+	UPROPERTY(BlueprintReadWrite, Category = "Stat Names")
+		FString maxHealthName;
 
-	UFUNCTION(BlueprintCallable, Category = Name)
+	UPROPERTY(BlueprintReadWrite, Category = "Stat Names")
+		FString staminaName;
+
+	UFUNCTION(BlueprintCallable, Category = "Name")
 		void SetCharacterName(FString newName);
 
-	UFUNCTION(BlueprintCallable, Category = Name)
+	UFUNCTION(BlueprintCallable, Category = "Name")
 		FString GetCharacterName();
 
 	/**Calculate defensive damage modifers and inflict damage and .*/
@@ -130,19 +133,19 @@ public:
 		void SetPassives(TArray<UPassive*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* GetModifiedStat(FString name);
+		UStat* GetModifiedStatByName(FString name);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* GetModifiedStat(UStat& inStat);
+		UStat* GetModifiedStat(UStat* inStat);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* ModifyStat(UStat& inStat);
+		UStat* ModifyStat(UStat* inStat);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* AddStat(UStat& inStat);
+		UStat* AddStat(UStat* inStat);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* AddStat(FString name, float value);
+		UStat* AddNewStat(FString name, float value);
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 		UStat* GetUnModifiedStat(FString name);

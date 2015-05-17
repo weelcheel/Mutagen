@@ -16,19 +16,6 @@ namespace ItemEnumns
 	};
 }
 
-UENUM(BlueprintType)
-namespace GradeEnumns
-{
-	enum Grade
-	{
-		Wood,
-		Tin,
-		Copper,
-		Iron,
-		Steel
-	};
-}
-
 #pragma once
 #include "UnrealString.h"
 #include "Item.generated.h"
@@ -57,21 +44,24 @@ public:
 		void SetName(FString newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
-		GradeEnumns::Grade GetGrade();
+		int32 GetGrade();
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
-		void SetGrade(GradeEnumns::Grade newVal);
+		void SetGrade(int32 newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
 		AMutagenCharacter* GetItemOwner();
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
 		void SetItemOwner(AMutagenCharacter* newVal);
+	int GetAmount();
+	void SetAmount(int newVal);
 
 private:
 	TEnumAsByte<ItemEnumns::ItemType> type;
 	FString name;
-	TEnumAsByte<GradeEnumns::Grade> grade;
+	int32 grade;
 	AMutagenCharacter* owner;
+	int amount;
 
 };

@@ -32,12 +32,12 @@ void AItem::SetName(FString newVal){
 }
 
 
-GradeEnumns::Grade AItem::GetGrade(){
+int32 AItem::GetGrade(){
 	return grade;
 }
 
 
-void AItem::SetGrade(GradeEnumns::Grade newVal){
+void AItem::SetGrade(int32 newVal){
 	grade = newVal;
 }
 
@@ -49,4 +49,16 @@ AMutagenCharacter* AItem::GetItemOwner(){
 
 void AItem::SetItemOwner(AMutagenCharacter* newVal){
 	owner = newVal;
+}
+
+
+int AItem::GetAmount(){
+
+	return amount;
+}
+
+
+void AItem::SetAmount(int newVal){
+
+	amount = newVal;
 }
