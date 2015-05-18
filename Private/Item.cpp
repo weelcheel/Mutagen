@@ -52,13 +52,37 @@ void AItem::SetItemOwner(AMutagenCharacter* newVal){
 }
 
 
-int AItem::GetAmount(){
+int32 AItem::GetAmount(){
 
 	return amount;
 }
 
 
-void AItem::SetAmount(int newVal){
+void AItem::SetAmount(int32 newVal){
 
 	amount = newVal;
+}
+
+
+int32 AItem::GetStackSize(){
+
+	return stackSize;
+}
+
+
+void AItem::SetStackSize(int32 newVal){
+
+	stackSize = newVal;
+}
+
+
+AItem* AItem::Copy() {
+	AItem* newItem = ConstructObject<AItem>(AItem::StaticClass());
+	newItem->SetName(GetName());
+	newItem->SetAmount(GetAmount());
+	newItem->SetStackSize(GetStackSize());
+	newItem->SetType(GetType());
+	newItem->SetGrade(GetGrade());
+	newItem->SetOwner(GetOwner());
+	return  newItem;
 }

@@ -54,14 +54,28 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
 		void SetItemOwner(AMutagenCharacter* newVal);
-	int GetAmount();
-	void SetAmount(int newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		int32 GetAmount();
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetAmount(int32 newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		int32 GetStackSize();
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetStackSize(int32 newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		AItem* Copy();
 
 private:
 	TEnumAsByte<ItemEnumns::ItemType> type;
 	FString name;
 	int32 grade;
 	AMutagenCharacter* owner;
-	int amount;
+	int32 amount;
+	int32 stackSize;
 
 };

@@ -25,6 +25,22 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 		void SetItems(TArray<AItem*> newVal);
 
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		bool AddItem(AItem* itemToAdd);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		bool RemoveItem(AItem* itemToRemove);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		int32 GetItemAmount(FString name);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		int32 GetMaxItemCount();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetMaxItemCount(int32 newVal);
+
 private:
 	TArray<AItem*> items;
+	int32 maxItemCount;
 };
