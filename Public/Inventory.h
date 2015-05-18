@@ -20,10 +20,13 @@ public:
 	UInventory();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		TArray<AItem*> GetItems();
+	TArray<AItem*> GetItems();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		void SetItems(TArray<AItem*> newVal);
+	void SetItems(TArray<AItem*> newVal);
+
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	void AddItem(AItem* newItem);
 
 private:
 	TArray<AItem*> items;

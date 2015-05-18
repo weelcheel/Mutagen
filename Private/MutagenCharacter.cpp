@@ -12,6 +12,9 @@
 #include "Skill.h"
 #include "Stat.h"
 #include "Passive.h"
+#include "GameFramework/HUD.h"
+#include "ItemPickup.h"
+#include "Engine.h"
 
 AMutagenCharacter::AMutagenCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){
 	SetModifiedStats(*new TArray<UStat*>());
@@ -32,6 +35,16 @@ void AMutagenCharacter::BeginPlay()
 
 	if (OnCharacterDeathEvent.IsBound()){
 		OnCharacterDeathEvent.Broadcast(this);
+	}
+
+	//add every character to be able to post render info about them
+	for (FConstPlayerControllerIterator pci = GetWorld()->GetPlayerControllerIterator(); pci; ++pci)
+	{
+		APlayerController* pc = *(pci);
+		if (pc && pc->GetHUD())
+		{
+			pc->GetHUD()->AddPostRenderedActor(this);
+		}
 	}
 }
 
@@ -300,4 +313,22 @@ void AMutagenCharacter::SetPassives(TArray<UPassive*> newVal){
 void AMutagenCharacter::Died()
 {
 
+}
+
+void AMutagenCharacter::NotifyNearPickup(AItemPickup* nearPickup)
+{
+	APlayerController* pc = Cast<APlayerController>(GetController());
+	if (pc && pc->GetHUD()) 
+	{
+		pc->GetHUD()->AddPostRenderedActor(nearPickup);
+	}
+}
+
+void AMutagenCharacter::NotifyLeavePickup(AItemPickup* leavingPickup)
+{
+	APlayerController* pc = Cast<APlayerController>(GetController());
+	if (pc && pc->GetHUD())
+	{
+		pc->GetHUD()->RemovePostRenderedActor(leavingPickup);
+	}
 }

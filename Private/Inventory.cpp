@@ -20,3 +20,8 @@ TArray<AItem*> UInventory::GetItems(){
 void UInventory::SetItems(TArray<AItem*> newVal){
 	items = newVal;
 }
+
+void UInventory::AddItem(AItem* newItem)
+{
+	items.Add(newItem);
+}

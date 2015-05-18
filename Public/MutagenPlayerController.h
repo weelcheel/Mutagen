@@ -8,13 +8,16 @@
 UCLASS()
 class MUTAGEN_API AMutagenPlayerController : public APlayerController
 {
-	GENERATED_BODY()
+	GENERATED_UCLASS_BODY()
 		
 	virtual void Possess(APawn* aPawn) override;
 
 	/** quests that the player receives */
 	UPROPERTY(replicated)
 	TArray<UQuest*> quests;
+
+	/** distance before the player 'sees' someone, good for UI */
+	float sightDistance;
 
 public:
 
@@ -25,4 +28,8 @@ public:
 	/** get function for quests, useful for UI */
 	UFUNCTION(BlueprintCallable, Category = Quests)
 	void GetQuests(TArray<UQuest*>& outArray);
+
+	/** gets the actor that the player is looking at */
+	UFUNCTION(BlueprintCallable, Category = Interaction)
+	AActor* GetActorCurrentlyLookingAt();
 };

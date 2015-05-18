@@ -15,6 +15,7 @@ class USkill;
 class AWeapon;
 class UPassive;
 class AItem;
+class AItemPickup;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDeathEvent, AMutagenCharacter*, entityInvolved);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCharacterPickupItem, AMutagenCharacter*, entityInvolved, AItem*, item);
@@ -134,7 +135,14 @@ public:
 	UStat* GetUnModifiedStat(FString name);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
-		virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
+	virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
+
+	/** notify when a pickup is near */
+	void NotifyNearPickup(AItemPickup* nearPickup);
+
+	/** notify when a leaving pickup */
+	void NotifyLeavePickup(AItemPickup* leavingPickup);
+
 private:
 	int32 maxHealth;
 	int32 currentHealth;
