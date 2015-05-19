@@ -70,6 +70,41 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Item")
 		AItem* Copy();
 
+	FORCEINLINE AItem& operator+(AItem &aitem)
+	{
+		AItem* nitem = ConstructObject<AItem>(AItem::StaticClass());
+		if (nitem)
+		{
+			nitem->amount = aitem.amount + amount;
+		}
+
+		return *nitem;
+	}
+
+	FORCEINLINE AItem& operator+=(AItem &aitem)
+	{
+		amount += aitem.amount;
+
+		return *this;
+	}
+	FORCEINLINE AItem& operator-(AItem &aitem)
+	{
+		AItem* nitem = ConstructObject<AItem>(AItem::StaticClass());
+		if (nitem)
+		{
+			nitem->amount = aitem.amount - amount;
+		}
+
+		return *nitem;
+	}
+
+	FORCEINLINE AItem& operator-=(AItem &aitem)
+	{
+		amount -= aitem.amount;
+
+		return *this;
+	}
+
 private:
 	TEnumAsByte<ItemEnumns::ItemType> type;
 	FString name;

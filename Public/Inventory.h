@@ -26,7 +26,7 @@ public:
 		void SetItems(TArray<AItem*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		bool AddItem(AItem* itemToAdd);
+		AItem* AddItem(AItem* itemToAdd);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 		bool RemoveItem(AItem* itemToRemove);
@@ -38,7 +38,10 @@ public:
 		int32 GetMaxItemCount();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void SetMaxItemCount(int32 newVal);
+		void SetMaxItemCount(int32 newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+		bool HasSpace();
 
 private:
 	TArray<AItem*> items;
