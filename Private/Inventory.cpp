@@ -36,11 +36,16 @@ bool UInventory::AddItem(AItem* itemToAdd){
 				return true;
 			}
 			else { // Otherwise max the amount and adda new item to the inventory
-				item->SetAmount(item->GetStackSize());
-				AItem* newItem = item->Copy();
-				newItem->SetAmount(-amountOfSpace);
-				GetItems().Add(newItem);
-				return true;
+				// At this stage will we need to check if their inventory is full
+				if (GetItems().Num() < GetMaxItemCount()) {
+					item->SetAmount(item->GetStackSize());
+					AItem* newItem = item->Copy();
+					newItem->SetAmount(-amountOfSpace);
+					GetItems().Add(newItem);
+					return true;
+				else {
+					return false;	
+				}
 			}
 		}
 	}
