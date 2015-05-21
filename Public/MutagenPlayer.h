@@ -4,11 +4,15 @@
 #include "MutagenPlayer.generated.h"
 
 class UInputComponent;
+class UBag;
 
 UCLASS(config = Game, Blueprintable)
 class AMutagenPlayer : public AMutagenCharacter
 {
 	GENERATED_BODY()
+private:
+	TArray<UBag*> bags;
+
 public:
 	AMutagenPlayer(const FObjectInitializer& ObjectInitializer);
 
@@ -70,5 +74,7 @@ protected:
 
 public:
 
-};
+
+	TArray<UBag*> GetBags();
+	void SetBags(TArray<UBag*> newVal);};
 
