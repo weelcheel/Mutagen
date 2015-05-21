@@ -76,6 +76,9 @@ void AWeapon::Equip(AMutagenCharacter* entity){
 	}
 }
 
+/**
+ * [local + server] handle weapon attack
+ */
 FHitResult AWeapon::WeaponTrace(const FVector& TraceFrom, const FVector& TraceTo) const
 {
 	static FName WeaponAttackTag = FName(TEXT("WeaponTrace"));
@@ -224,15 +227,15 @@ void AWeapon::SetWeaponRange(UStat* newVal){
 
 
 /**
- * current weapon state
+ * UFUNCTION(BlueprintCallable, Category = "Weapon")
  */
 TEnumAsByte<EWeaponState::Type> AWeapon::GetCurrentState(){
 	return currentState;
 }
 
 /**
-* current weapon state
-*/
+ * UFUNCTION(BlueprintCallable, Category = "Weapon")
+ */
 void AWeapon::SetCurrentState(EWeaponState::Type newVal){
 
 	const EWeaponState::Type PrevState = currentState;
@@ -269,4 +272,23 @@ void AWeapon::ServerStopAttack(){
 
 void AWeapon::StartAttack(){
 
+}
+
+
+bool AWeapon::IsOneHanded(){
+	return oneHanded;
+}
+
+
+void AWeapon::SetOneHanded(bool newVal){
+	oneHanded = newVal;
+}
+
+EWeaponType::WeaponType AWeapon::GetCurrentWeaponType(){
+	return currentWeaponType;
+}
+
+
+void AWeapon::SetCurrentWeaponType(EWeaponType::WeaponType newVal){
+	currentWeaponType = newVal;
 }

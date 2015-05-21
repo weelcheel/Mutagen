@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////
 
 #pragma once
-#include "GameFramework/Character.h"
+#include "BaseCharacter.h"
 #include "MutagenCharacter.generated.h"
 
 class UStat;
@@ -20,18 +20,14 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDeathEvent, AMutagenCharac
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCharacterPickupItem, AMutagenCharacter*, entityInvolved, AItem*, item);
 
 UCLASS(Blueprintable)
-/**
- * #include "Skill.h" #include "UQuest.h"
- */
-class AMutagenCharacter : public ACharacter
+class AMutagenCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 
 		virtual void BeginPlay() override;
 
 	/** variable that contains the character's in-game name (useful for UI) */
-	UPROPERTY(EditDefaultsOnly, Category = Name)
-		FString characterName;
+
 
 protected:
 
@@ -40,18 +36,6 @@ protected:
 
 public:
 	AMutagenCharacter(const FObjectInitializer& ObjectInitializer);
-
-	UPROPERTY(BlueprintReadWrite, Category = "Stat Names")
-		FString maxHealthName;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Stat Names")
-		FString staminaName;
-
-	UFUNCTION(BlueprintCallable, Category = "Name")
-		void SetCharacterName(FString newName);
-
-	UFUNCTION(BlueprintCallable, Category = "Name")
-		FString GetCharacterName();
 
 	/**Calculate defensive damage modifers and inflict damage and .*/
 	UFUNCTION(BlueprintCallable, Category = "Damage")
@@ -66,6 +50,8 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 		FCharacterPickupItem OnCharacterPickupItem;
 
+	//----------------Weapon-------------------------
+
 	/**
 	 * Calculate defensive damage modifers and inflict damage and .
 	 */
@@ -76,34 +62,13 @@ public:
 		void StopWeaponAttack();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		int32 GetCurrentHealth();
+		TArray<AWeapon*> GetEquipedWeapons();
 
-	UFUNCTION(BlueprintCallable, Category = "Health")
-		void SetCurrentHealth(int32 newVal);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void SetEquipedWeapons(TArray<AWeapon*> newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Health")
-		int32 GetMaxHealth();
 
-	UFUNCTION(BlueprintCallable, Category = "Health")
-		void SetMaxHealth(int32 newVal);
-
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		UInventory* GetInventory();
-
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-		void SetInventory(UInventory* newVal);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		TArray<UStat*> GetUnmodifiedStats();
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		void SetUnmodifiedStats(TArray<UStat*> newVal);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		TArray<UStat*> GetModifiedStats(bool update);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		void SetModifiedStats(TArray<UStat*> newVal);
+	//----------------Skills-------------------------
 
 	UFUNCTION(BlueprintCallable, Category = "Skills")
 		TArray<USkill*> GetSkills();
@@ -111,57 +76,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Skills")
 		void SetSkills(TArray<USkill*> newVal);
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		TArray<AWeapon*> GetEquipedWeapons();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void SetEquipedWeapons(TArray<AWeapon*> newVal);
-
-	UFUNCTION(BlueprintCallable, Category = "Stamina")
-		int32 GetStamina();
-
-	/**
-	 * Calculate defensive damage modifers and inflict damage and .
-	 */
-	UFUNCTION(BlueprintCallable, Category = "Stamina")
-		void SetStamina(int32 newVal);
-
-	UFUNCTION(BlueprintCallable, Category = "Passives")
-		TArray<UPassive*> GetPassives();
-
-	UFUNCTION(BlueprintCallable, Category = "Passives")
-		void SetPassives(TArray<UPassive*> newVal);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* GetModifiedStatByName(FString name);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* GetModifiedStat(UStat* inStat);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* ModifyStat(UStat* inStat);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* AddStat(UStat* inStat);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* AddNewStat(FString name, float value);
-
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-		UStat* GetUnModifiedStat(FString name);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
 		virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
 private:
-	int32 currentHealth;
-
 	/** current attacking state */
 	uint8 bWantsToAttack : 1;
 
-	UInventory* inventory;
-	TArray<UStat*> unmodifiedStats;
-	TArray<UStat*> modifiedStats;
 	TArray<USkill*> skills;
 	TArray<AWeapon*> equipedWeapons;
-	TArray<UPassive*> passives;
 };

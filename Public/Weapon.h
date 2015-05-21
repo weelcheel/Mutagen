@@ -16,6 +16,25 @@ namespace EWeaponState
 		Equipping,
 		Unequiping,
 	};
+
+
+}
+
+namespace EWeaponType
+{
+	UENUM(BlueprintType)
+	enum WeaponType
+	{
+		Sword,
+		Bow,
+		Axe,
+		Crossbow,
+		Spear,
+		Mace,
+		Hammer
+	};
+
+
 }
 
 #pragma once
@@ -58,13 +77,13 @@ public:
 	 * current weapon state
 	 */
 	//UFUNCTION(BlueprintCallable, Category = "Weapon")
-		TEnumAsByte<EWeaponState::Type> GetCurrentState();
+	TEnumAsByte<EWeaponState::Type> GetCurrentState();
 
 	/**
 	* current weapon state
 	*/
 	//UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void SetCurrentState(EWeaponState::Type newVal);
+	void SetCurrentState(EWeaponState::Type newVal);
 
 	void DetermineWeaponState();
 
@@ -106,6 +125,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void StartAttack();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		bool IsOneHanded();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void SetOneHanded(bool newVal);
+
+		EWeaponType::WeaponType GetCurrentWeaponType();
+
+		void SetCurrentWeaponType(EWeaponType::WeaponType newVal);
 private:
 	UStat* weaponDamage;
 	UStat* weaponRange;
@@ -137,6 +166,9 @@ private:
 	/** current weapon state */
 	TEnumAsByte<EWeaponState::Type> currentState;
 
+	/** current weapon type */
+	TEnumAsByte<EWeaponType::WeaponType> currentWeaponType;
+
 	/** time of last successful weapon attack */
 	float LastAttackTime;
 
@@ -151,6 +183,7 @@ private:
 
 	/** timer reference for the fire timer */
 	FTimerHandle equipTimerHandle;
+	bool oneHanded;
 protected:
 
 	/**
