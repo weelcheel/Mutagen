@@ -41,15 +41,12 @@ UStat* ABaseCharacter::GetModifiedStatByName(FString name){
 	tempStat.SetName(name);
 
 	// Look through are current unmodified stats to see if this stat exists
-	for (UStat* stat : GetUnmodifiedStats()){
+	for (UStat* stat : GetModifiedStats()){
 
 		// Does the stat matches the stat we're looking for 
 		if (stat->GetName().Equals(name)){
 			//Get the correct value for the stat
 			tempStat += *stat;
-
-			// Modify the stat with passives
-			ModifyStat(&tempStat);
 			break;
 		}
 	}
