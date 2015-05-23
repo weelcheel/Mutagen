@@ -7,6 +7,7 @@
 
 #include "Mutagen.h"
 #include "SpawnPoint.h"
+#include "BaseCharacter.h"
 
 /**
  * Sets default values for this actor's properties
@@ -25,7 +26,7 @@ void ASpawnPoint::BeginPlay(){
 	Super::BeginPlay();
 }
 
-void ASpawnPoint::EntityDied(AMutagenCharacter* entityInvolved){
+void ASpawnPoint::EntityDied(ABaseCharacter* entityInvolved){
 	GetWorldTimerManager().SetTimer(this, &ASpawnPoint::Spawn, GetCooldown());
 }
 

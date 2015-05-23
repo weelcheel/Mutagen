@@ -10,6 +10,10 @@ class UInventory;
 class UPassive;
 class UStat;
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDeathEvent, ABaseCharacter*, entityInvolved);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCharacterPickupItem, ABaseCharacter*, entityInvolved, AItem*, item);
+
 UCLASS()
 class MUTAGEN_API ABaseCharacter : public ACharacter
 {
@@ -18,6 +22,15 @@ class MUTAGEN_API ABaseCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ABaseCharacter(const FObjectInitializer& ObjectInitializer);
+
+	//----------------Events-------------------------
+
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+		FCharacterDeathEvent OnCharacterDeathEvent;
+
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+		FCharacterPickupItem OnCharacterPickupItem;
+
 
 	UPROPERTY(BlueprintReadWrite, Category = "Stat Names")
 		FString maxHealthName;

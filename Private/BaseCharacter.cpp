@@ -31,7 +31,7 @@ ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
+	GetModifiedStats(true);
 }
 
 
@@ -46,7 +46,7 @@ UStat* ABaseCharacter::GetModifiedStatByName(FString name){
 	tempStat.SetName(name);
 
 	// Look through are current unmodified stats to see if this stat exists
-	for (UStat* stat : GetModifiedStats()){
+	for (UStat* stat : GetModifiedStats(false)){
 
 		// Does the stat matches the stat we're looking for 
 		if (stat->GetName().Equals(name)){

@@ -16,8 +16,6 @@ class AWeapon;
 class UPassive;
 class AItem;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDeathEvent, AMutagenCharacter*, entityInvolved);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCharacterPickupItem, AMutagenCharacter*, entityInvolved, AItem*, item);
 
 UCLASS(Blueprintable)
 class AMutagenCharacter : public ABaseCharacter
@@ -40,15 +38,7 @@ public:
 	/**Calculate defensive damage modifers and inflict damage and .*/
 	UFUNCTION(BlueprintCallable, Category = "Damage")
 		virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-
-
-	//----------------Events-------------------------
-
-	UPROPERTY(BlueprintAssignable, Category = "Events")
-		FCharacterDeathEvent OnCharacterDeathEvent;
-
-	UPROPERTY(BlueprintAssignable, Category = "Events")
-		FCharacterPickupItem OnCharacterPickupItem;
+	
 
 	//----------------Weapon-------------------------
 

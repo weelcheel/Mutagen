@@ -48,7 +48,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawn Point")
 		void SetCharacterClass(UClass* newVal);
 
-	void EntityDied(AMutagenCharacter* entityInvolved);
+	void EntityDied(ABaseCharacter* entityInvolved);
 
 private:
 	float cooldown;
