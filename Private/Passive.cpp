@@ -9,40 +9,72 @@
 #include "Passive.h"
 #include "Effect.h"
 #include "Stat.h"
+#include "BaseCharacter.h"
 
-UPassive::UPassive(){
+UPassive::UPassive(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){
 
 }
 
-TArray<FStatModifier> UPassive::getStatModifiers(){
+TArray<FStatModifier> UPassive::GetStatModifiers(){
 	return statModifiers;
 }
 
 
-void UPassive::setStatModifiers(TArray<FStatModifier> newVal){
+void UPassive::SetStatModifiers(TArray<FStatModifier> newVal){
 	statModifiers = newVal;
 }
 
 
-TArray<UEffect*> UPassive::getEffects(){
+TArray<UEffect*> UPassive::GetEffects(){
 	return effects;
 }
 
 
-void UPassive::setEffects(TArray<UEffect*> newVal){
+void UPassive::SetEffects(TArray<UEffect*> newVal){
 	effects = newVal;
 }
 
 
-void UPassive::ModifyStat(UStat& stat){
+void UPassive::ModifyStat(UStat* outStat, const UStat* originalStat ){
 	for (FStatModifier modifier : statModifiers) {
-		if (modifier.name.Equals(stat.GetName())){
-			if (modifier.positive){
-				stat.SetValue(stat.GetValue() + modifier.amount);
+		if (modifier.name.Equals(outStat->GetName())){
+			if (modifier.positive) {
+				if (modifier.percentage){
+					float newValue = outStat->GetValue() + (outStat->GetValue() *  modifier.amount);
+					outStat->SetValue(newValue);
+				}
+				else {
+					outStat->SetValue(outStat->GetValue() + modifier.amount);
+				}
 			}
 			else {
-				stat.SetValue(stat.GetValue() - modifier.amount);
+				if (modifier.percentage){
+					float newValue = outStat->GetValue() - (outStat->GetValue() *  modifier.amount);
+					outStat->SetValue(newValue);
+				}
+				else {
+					outStat->SetValue(outStat->GetValue() - modifier.amount);
+				}
 			}
 		}
 	}
+}
+
+
+UPassive* UPassive::CreatePassive(ABaseCharacter* owner, TArray<FStatModifier> modifier, TArray<UEffect*> effects = *new TArray<UEffect*>()){
+	UPassive& tempPassive = *ConstructObject<UPassive>(UPassive::StaticClass());
+	tempPassive.SetStatModifiers(modifier);
+	tempPassive.SetEffects(effects);
+	tempPassive.SetOwner(owner);
+	return &tempPassive;
+}
+
+
+ABaseCharacter* UPassive::GetOwner(){
+	return owner;
+}
+
+
+void UPassive::SetOwner(ABaseCharacter* newVal){
+	owner = newVal;
 }

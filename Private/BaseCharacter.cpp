@@ -7,26 +7,31 @@
 #include "Stat.h"
 #include "Passive.h"
 
-// Sets default values
+/**
+ * Sets default values for this character's properties
+ */
 ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	SetCurrentHealth(100);
-	SetMaxHealth(100);
-	SetModifiedStats(*new TArray<UStat*>());
-	SetUnmodifiedStats(*new TArray<UStat*>());
-	SetInventory(ConstructObject<UInventory>(UInventory::StaticClass()));
 
 	maxHealthName = "MaxHealth";
 	staminaName = "Stamina";
+
+	SetModifiedStats(*new TArray<UStat*>());
+	SetUnmodifiedStats(*new TArray<UStat*>());
+
+	SetCurrentHealth(100);
+	SetMaxHealth(GetMaxHealth());
+
+	SetInventory(ConstructObject<UInventory>(UInventory::StaticClass()));
 }
 
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 
@@ -41,20 +46,18 @@ UStat* ABaseCharacter::GetModifiedStatByName(FString name){
 	tempStat.SetName(name);
 
 	// Look through are current unmodified stats to see if this stat exists
-	for (UStat* stat : GetUnmodifiedStats()){
+	for (UStat* stat : GetModifiedStats()){
 
 		// Does the stat matches the stat we're looking for 
 		if (stat->GetName().Equals(name)){
 			//Get the correct value for the stat
 			tempStat += *stat;
-
-			// Modify the stat with passives
-			ModifyStat(&tempStat);
 			break;
 		}
 	}
 	return &tempStat;
 }
+
 
 /* Checks all stats and modifies them with the current passives, returns the results */
 TArray<UStat*> ABaseCharacter::GetModifiedStats(bool update = false){
@@ -102,7 +105,7 @@ UStat* ABaseCharacter::GetUnModifiedStat(FString name){
 /* Loops through all passives getting them to manipulate the stat, if at all */
 UStat* ABaseCharacter::ModifyStat(UStat* inStat){
 	for (UPassive* passive : GetPassives()) {
-		passive->ModifyStat(*inStat);
+		passive->ModifyStat(inStat, GetUnModifiedStat(inStat->GetName()));
 	}
 
 	return inStat;
@@ -211,3 +214,8 @@ FString ABaseCharacter::GetCharacterName()
 	}
 }
 
+
+UPassive* ABaseCharacter::AddPassive(UPassive* newPassive){
+	passives.Add(newPassive);
+	return  newPassive;
+}

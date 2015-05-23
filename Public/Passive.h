@@ -7,12 +7,13 @@
 
 #pragma once
 
-#include "StatModifier.h"
 #include "Array.h"
 #include "Object.h"
+#include "StatModifier.h"
 #include "Passive.generated.h"
 
 class UEffect;
+class ABaseCharacter;
 
 UCLASS(Blueprintable)
 class UPassive : public UObject
@@ -20,17 +21,34 @@ class UPassive : public UObject
 	GENERATED_BODY()
 
 public:
-	UPassive();
+	UPassive(const FObjectInitializer& ObjectInitializer);
+	
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		TArray<FStatModifier> GetStatModifiers();
 
-	TArray<FStatModifier> getStatModifiers();
-	void setStatModifiers(TArray<FStatModifier> newVal);
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		void SetStatModifiers(TArray<FStatModifier> newVal);
 
-	TArray<UEffect*> getEffects();
-	void setEffects(TArray<UEffect*> newVal);
-	void ModifyStat(UStat& stat);
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		TArray<UEffect*> GetEffects();
+
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		void SetEffects(TArray<UEffect*> newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		void ModifyStat(UStat* outStat, const UStat* originalStat);
+
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		static UPassive* CreatePassive(ABaseCharacter* owner, TArray<FStatModifier> modifier, TArray<UEffect*> effects);
+
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		ABaseCharacter* GetOwner();
+
+	UFUNCTION(BlueprintCallable, Category = "Passive")
+		void SetOwner(ABaseCharacter* newVal);
 
 private:
 	TArray<FStatModifier> statModifiers;
 	TArray<UEffect*> effects;
-
+	ABaseCharacter* owner;
 };

@@ -25,7 +25,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Stat Names")
 		FString staminaName;
 
-
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 		UInventory* GetInventory();
 
@@ -41,7 +40,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Name")
 		FString GetCharacterName();
 
-
 	UFUNCTION(BlueprintCallable, Category = "Health")
 		int32 GetCurrentHealth();
 
@@ -53,7 +51,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
 		void SetMaxHealth(int32 newVal);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
 		void SetStamina(int32 newVal);
 
@@ -99,6 +97,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Passives")
 		void SetPassives(TArray<UPassive*> newVal);
 
+	UFUNCTION(BlueprintCallable, Category = "Passives")
+		UPassive* AddPassive(UPassive* newPassive);
+
 private:
 	int32 currentHealth;
 	int32 currentStamina;
@@ -110,5 +111,4 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Name)
 		FString characterName;
-
 };
