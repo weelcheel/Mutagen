@@ -22,7 +22,10 @@ ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 	SetUnmodifiedStats(*new TArray<UStat*>());
 
 	SetCurrentHealth(100);
-	SetMaxHealth(GetMaxHealth());
+	SetMaxStamina(100);
+
+	SetCurrentHealth(GetMaxHealth());
+	SetCurrentStamina(GetMaxStamina());
 
 	SetInventory(ConstructObject<UInventory>(UInventory::StaticClass()));
 }
@@ -39,17 +42,17 @@ void ABaseCharacter::BeginPlay()
 This currenty checks all passives to see if the stat needs to be change, + or -
 If the stat isn't found then it will default to 0 and the passives could make it -
 */
-UStat* ABaseCharacter::GetModifiedStatByName(FString name){
+UStat* ABaseCharacter::GetModifiedStatByName(FString name) {
 	// Create a tempory stat to send back
 	UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
 	tempStat.SetValue(0);
 	tempStat.SetName(name);
 
 	// Look through are current unmodified stats to see if this stat exists
-	for (UStat* stat : GetModifiedStats(false)){
+	for (UStat* stat : GetModifiedStats(false)) {
 
 		// Does the stat matches the stat we're looking for 
-		if (stat->GetName().Equals(name)){
+		if (stat->GetName().Equals(name)) {
 			//Get the correct value for the stat
 			tempStat += *stat;
 			break;
@@ -60,11 +63,11 @@ UStat* ABaseCharacter::GetModifiedStatByName(FString name){
 
 
 /* Checks all stats and modifies them with the current passives, returns the results */
-TArray<UStat*> ABaseCharacter::GetModifiedStats(bool update = false){
+TArray<UStat*> ABaseCharacter::GetModifiedStats(bool update = false) {
 	if (update) {
 		TArray<UStat*> tempStats = *new TArray<UStat*>();
 
-		for (UStat* stat : GetUnmodifiedStats()){
+		for (UStat* stat : GetUnmodifiedStats()) {
 			//Create a temp stat to add to the array
 			UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
 
@@ -84,14 +87,14 @@ TArray<UStat*> ABaseCharacter::GetModifiedStats(bool update = false){
 }
 
 /* This is used to get a modified version of a stat  */
-UStat* ABaseCharacter::GetModifiedStat(UStat* inStat){
+UStat* ABaseCharacter::GetModifiedStat(UStat* inStat) {
 	ModifyStat(inStat);
 	return inStat;
 }
 
-UStat* ABaseCharacter::GetUnModifiedStat(FString name){
+UStat* ABaseCharacter::GetUnModifiedStat(FString name) {
 	// Look through are current unmodified stats to see if this stat exists
-	for (UStat* stat : GetUnmodifiedStats()){
+	for (UStat* stat : GetUnmodifiedStats()) {
 
 		// Does the stat matches the stat we're looking for 
 		if (stat->GetName().Equals(name)) {
@@ -103,7 +106,7 @@ UStat* ABaseCharacter::GetUnModifiedStat(FString name){
 
 
 /* Loops through all passives getting them to manipulate the stat, if at all */
-UStat* ABaseCharacter::ModifyStat(UStat* inStat){
+UStat* ABaseCharacter::ModifyStat(UStat* inStat) {
 	for (UPassive* passive : GetPassives()) {
 		passive->ModifyStat(inStat, GetUnModifiedStat(inStat->GetName()));
 	}
@@ -113,9 +116,9 @@ UStat* ABaseCharacter::ModifyStat(UStat* inStat){
 
 
 /*Adds a stat to the current unmodifiedStats, if the stat exists then it increases it's value by the in Stats' value */
-UStat* ABaseCharacter::AddStat(UStat* inStat){
+UStat* ABaseCharacter::AddStat(UStat* inStat) {
 	UStat* tempStat = GetUnModifiedStat(inStat->GetName());
-	if (tempStat != NULL){
+	if (tempStat != NULL) {
 		*tempStat += *inStat;
 	}
 	else {
@@ -126,7 +129,7 @@ UStat* ABaseCharacter::AddStat(UStat* inStat){
 }
 
 /*Adds a new stat to unmodifiedStats using ConstructObject and then AddStat */
-UStat* ABaseCharacter::AddNewStat(FString name, float value){
+UStat* ABaseCharacter::AddNewStat(FString name, float value) {
 	UStat& tempStat = *ConstructObject<UStat>(UStat::StaticClass());
 
 	// Copy the values
@@ -137,72 +140,70 @@ UStat* ABaseCharacter::AddNewStat(FString name, float value){
 	return &tempStat;
 }
 
-UInventory* ABaseCharacter::GetInventory(){
+UInventory* ABaseCharacter::GetInventory() {
 	return inventory;
 }
 
-void ABaseCharacter::SetInventory(UInventory* newVal){
+void ABaseCharacter::SetInventory(UInventory* newVal) {
 	inventory = newVal;
 }
 
-TArray<UStat*> ABaseCharacter::GetUnmodifiedStats(){
+TArray<UStat*> ABaseCharacter::GetUnmodifiedStats() {
 	return unmodifiedStats;
 }
 
-void ABaseCharacter::SetUnmodifiedStats(TArray<UStat*> newVal){
+void ABaseCharacter::SetUnmodifiedStats(TArray<UStat*> newVal) {
 	unmodifiedStats = newVal;
 }
 
-void ABaseCharacter::SetModifiedStats(TArray<UStat*> newVal){
+void ABaseCharacter::SetModifiedStats(TArray<UStat*> newVal) {
 	modifiedStats = newVal;
 }
 
 
-int32 ABaseCharacter::GetStamina(){
+float ABaseCharacter::GetMaxStamina() {
 	return GetModifiedStatByName(staminaName)->GetValue();
 }
 
 /**
 * Calculate defensive damage modifers and inflict damage and .
 */
-void ABaseCharacter::SetStamina(int32 newVal){
-	if (GetModifiedStatByName(staminaName)->GetValue() == 0){
+void ABaseCharacter::SetMaxStamina(float newVal) {
+	if (GetModifiedStatByName(staminaName)->GetValue() == 0) {
 		AddNewStat(staminaName, newVal);
 	}
 }
 
-TArray<UPassive*> ABaseCharacter::GetPassives(){
+TArray<UPassive*> ABaseCharacter::GetPassives() {
 	return passives;
 }
 
 
-void ABaseCharacter::SetPassives(TArray<UPassive*> newVal){
+void ABaseCharacter::SetPassives(TArray<UPassive*> newVal) {
 	passives = newVal;
 }
 
-int32 ABaseCharacter::GetCurrentHealth(){
+float ABaseCharacter::GetCurrentHealth() {
 	return currentHealth;
 }
 
-void ABaseCharacter::SetCurrentHealth(int32 newVal){
+void ABaseCharacter::SetCurrentHealth(float newVal) {
 	currentHealth = newVal;
 }
 
-int32 ABaseCharacter::GetMaxHealth(){
+float ABaseCharacter::GetMaxHealth() {
 	return GetModifiedStatByName(maxHealthName)->GetValue();
 }
 
-void ABaseCharacter::SetMaxHealth(int32 newVal){
+void ABaseCharacter::SetMaxHealth(float newVal) {
 	AddNewStat(maxHealthName, newVal);
 }
 
-void ABaseCharacter::SetCharacterName(FString newName)
-{
+void ABaseCharacter::SetCharacterName(FString newName) {
 	characterName = newName;
 }
 
-FString ABaseCharacter::GetCharacterName()
-{
+FString ABaseCharacter::GetCharacterName() {
 	if (GetController())
 	{
 		// get the player name instead of the character name
@@ -215,7 +216,18 @@ FString ABaseCharacter::GetCharacterName()
 }
 
 
-UPassive* ABaseCharacter::AddPassive(UPassive* newPassive){
+UPassive* ABaseCharacter::AddPassive(UPassive* newPassive) {
 	passives.Add(newPassive);
 	return  newPassive;
+}
+
+
+
+float ABaseCharacter::GetCurrentStamina(){
+	return currentStamina;
+}
+
+
+void ABaseCharacter::SetCurrentStamina(float newVal){
+	currentStamina = newVal;
 }

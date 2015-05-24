@@ -54,22 +54,22 @@ public:
 		FString GetCharacterName();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-		int32 GetCurrentHealth();
+		float GetCurrentHealth();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-		void SetCurrentHealth(int32 newVal);
+		void SetCurrentHealth(float newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-		int32 GetMaxHealth();
+		float GetMaxHealth();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-		void SetMaxHealth(int32 newVal);
+		void SetMaxHealth(float newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
-		void SetStamina(int32 newVal);
+		void SetMaxStamina(float newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
-		int32 GetStamina();
+		float GetMaxStamina();
 
 
 	//----------------Stats-------------------------
@@ -113,9 +113,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Passives")
 		UPassive* AddPassive(UPassive* newPassive);
 
+	float GetCurrentStamina();
+	void SetCurrentStamina(float newVal);
+
 private:
-	int32 currentHealth;
-	int32 currentStamina;
+	float currentHealth;
+	float currentStamina;
 	UInventory* inventory;
 
 	TArray<UPassive*> passives;
