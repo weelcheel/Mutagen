@@ -38,7 +38,7 @@ public:
 	/**Calculate defensive damage modifers and inflict damage and .*/
 	UFUNCTION(BlueprintCallable, Category = "Damage")
 		virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-	
+
 
 	//----------------Weapon-------------------------
 
@@ -66,10 +66,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Skills")
 		void SetSkills(TArray<USkill*> newVal);
 
-
+	UFUNCTION(BlueprintCallable, Category = "Skills")
+		bool AddSkill(USkill* newSkill);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
 		virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
+
+
 private:
 	/** current attacking state */
 	uint8 bWantsToAttack : 1;

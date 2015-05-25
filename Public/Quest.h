@@ -28,7 +28,7 @@ private:
 public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Events")
-	FQuestCompleted OnQuestCompleted;
+		FQuestCompleted OnQuestCompleted;
 
 	UFUNCTION(BlueprintCallable, Category = Quest)
 		TArray<UQuestReward*> GetRewards();
@@ -56,7 +56,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Quest)
 		bool IsComplete();
-	
+
 	UFUNCTION(BlueprintCallable, Category = Quest)
 		void AddObjective(UQuestObjective* inObjective);
 
@@ -74,4 +74,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Quest)
 		UQuestObjective* GetFirstObjective();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		void AbandonQuest();
 };

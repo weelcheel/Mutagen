@@ -3,6 +3,7 @@
 #include "Mutagen.h"
 #include "MutagenPlayer.h"
 #include "Bag.h"
+#include "Quest.h"
 #include "MutagenProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "GameFramework/InputSettings.h"
@@ -193,4 +194,24 @@ AItem* AMutagenPlayer::SelectInventoryItem(){
 bool AMutagenPlayer::ExchangeItems(AItem* itemA, AItem* itemB){
 
 	return false;
+}
+
+
+bool AMutagenPlayer::OpenQuestList(){
+	return false;
+}
+
+
+void AMutagenPlayer::SelectQuest(UQuest* questSelected){
+	selectedQuest = questSelected;
+}
+
+
+void AMutagenPlayer::AbandonQuest(UQuest* quest){
+	GetSelectedQuest() != NULL ? GetSelectedQuest()->AbandonQuest() : true;
+}
+
+
+UQuest* AMutagenPlayer::GetSelectedQuest(){
+	return selectedQuest;
 }

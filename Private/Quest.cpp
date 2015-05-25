@@ -110,3 +110,8 @@ UQuestObjective* UQuest::GetFirstObjective()
 
 	return NULL;
 }
+
+
+void UQuest::AbandonQuest(){
+
+}

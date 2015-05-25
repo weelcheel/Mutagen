@@ -90,3 +90,6 @@ void AMutagenCharacter::SetEquipedWeapons(TArray<AWeapon*> newVal){
 	equipedWeapons = newVal;
 }
 
+bool AMutagenCharacter::AddSkill(USkill* newSkill){
+	return skills.Add(newSkill);
+}
