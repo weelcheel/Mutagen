@@ -69,6 +69,9 @@ UPassive* UPassive::CreatePassive(ABaseCharacter* owner, TArray<FStatModifier> m
 	return &tempPassive;
 }
 
+//UPassive* UPassive::Create(ABaseCharacter* owner, TArray<FStatModifier> modifier, TArray<UEffect*> effects){
+//}
+
 
 ABaseCharacter* UPassive::GetOwner(){
 	return owner;

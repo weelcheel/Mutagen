@@ -76,5 +76,8 @@ public:
 
 
 	TArray<UBag*> GetBags();
-	void SetBags(TArray<UBag*> newVal);};
+	void SetBags(TArray<UBag*> newVal);
+	void OpenInventory();
+	AItem* SelectInventoryItem();
+	bool ExchangeItems(AItem* itemA, AItem* itemB);};
 

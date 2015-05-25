@@ -22,7 +22,7 @@ class UPassive : public UObject
 
 public:
 	UPassive(const FObjectInitializer& ObjectInitializer);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Passive")
 		TArray<FStatModifier> GetStatModifiers();
 
@@ -40,6 +40,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Passive")
 		static UPassive* CreatePassive(ABaseCharacter* owner, TArray<FStatModifier> modifier, TArray<UEffect*> effects);
+
+	//UFUNCTION(BlueprintImplementableEvent, Category = "Passive")
+		//static UPassive* Create(ABaseCharacter* owner, TArray<FStatModifier> modifier, TArray<UEffect*> effects);
 
 	UFUNCTION(BlueprintCallable, Category = "Passive")
 		ABaseCharacter* GetOwner();

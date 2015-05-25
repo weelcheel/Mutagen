@@ -18,6 +18,9 @@ class AItem;
 
 
 UCLASS(Blueprintable)
+/**
+ * #include "Skill.h" #include "UQuest.h"
+ */
 class AMutagenCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
@@ -27,10 +30,7 @@ class AMutagenCharacter : public ABaseCharacter
 	/** variable that contains the character's in-game name (useful for UI) */
 
 
-protected:
 
-	/** called when the character's health reaches 0 */
-	virtual void Died();
 
 public:
 	AMutagenCharacter(const FObjectInitializer& ObjectInitializer);

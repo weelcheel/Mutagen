@@ -177,3 +177,20 @@ void AMutagenPlayer::SetBags(TArray<UBag*> newVal){
 
 	bags = newVal;
 }
+
+
+void AMutagenPlayer::OpenInventory(){
+
+}
+
+
+AItem* AMutagenPlayer::SelectInventoryItem(){
+
+	return  NULL;
+}
+
+
+bool AMutagenPlayer::ExchangeItems(AItem* itemA, AItem* itemB){
+
+	return false;
+}

@@ -90,9 +90,3 @@ void AMutagenCharacter::SetEquipedWeapons(TArray<AWeapon*> newVal){
 	equipedWeapons = newVal;
 }
 
-void AMutagenCharacter::Died()
-{
-	if (OnCharacterDeathEvent.IsBound()){
-		OnCharacterDeathEvent.Broadcast(this);
-	}
-}

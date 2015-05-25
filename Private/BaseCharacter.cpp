@@ -4,8 +4,11 @@
 #include "BaseCharacter.h"
 #include "Inventory.h" 
 #include "Skill.h"
+#include "Item.h"
 #include "Stat.h"
 #include "Passive.h"
+#include "Quest.h"
+#include "MutagenPlayer.h"
 
 /**
  * Sets default values for this character's properties
@@ -199,6 +202,14 @@ void ABaseCharacter::SetMaxHealth(float newVal) {
 	AddNewStat(maxHealthName, newVal);
 }
 
+float ABaseCharacter::GetCurrentStamina(){
+	return currentStamina;
+}
+
+void ABaseCharacter::SetCurrentStamina(float newVal){
+	currentStamina = newVal;
+}
+
 void ABaseCharacter::SetCharacterName(FString newName) {
 	characterName = newName;
 }
@@ -218,16 +229,35 @@ FString ABaseCharacter::GetCharacterName() {
 
 UPassive* ABaseCharacter::AddPassive(UPassive* newPassive) {
 	passives.Add(newPassive);
-	return  newPassive;
+	return newPassive;
 }
 
 
-
-float ABaseCharacter::GetCurrentStamina(){
-	return currentStamina;
+bool ABaseCharacter::InteractWith(AMutagenPlayer* player){
+	return false;
 }
 
 
-void ABaseCharacter::SetCurrentStamina(float newVal){
-	currentStamina = newVal;
+void ABaseCharacter::InitiateInteraction(AMutagenPlayer* player){
+
+}
+
+
+UQuest* ABaseCharacter::AcceptQuest(){
+	return  NULL;
+}
+
+
+AItem* ABaseCharacter::AddItem(AItem* item){
+	return  NULL;
+}
+
+/**
+* called when the character's health reaches 0
+*/
+void ABaseCharacter::Died()
+{
+	if (OnCharacterDeathEvent.IsBound()){
+		OnCharacterDeathEvent.Broadcast(this);
+	}
 }

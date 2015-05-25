@@ -9,6 +9,9 @@
 class UInventory;
 class UPassive;
 class UStat;
+class UQuest;
+class AMutagenPlayer;
+class AItem;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDeathEvent, ABaseCharacter*, entityInvolved);
@@ -18,7 +21,10 @@ UCLASS()
 class MUTAGEN_API ABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
+protected:
 
+	/** called when the character's health reaches 0 */
+	virtual void Died();
 public:
 	// Sets default values for this character's properties
 	ABaseCharacter(const FObjectInitializer& ObjectInitializer);
@@ -52,6 +58,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Name")
 		FString GetCharacterName();
+	
+	//----------------Base Stats-------------------------
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
 		float GetCurrentHealth();
@@ -71,6 +79,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Stamina")
 		float GetMaxStamina();
 
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+		float GetCurrentStamina();
+
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+		void SetCurrentStamina(float newVal);
 
 	//----------------Stats-------------------------
 
@@ -113,8 +126,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Passives")
 		UPassive* AddPassive(UPassive* newPassive);
 
-	float GetCurrentStamina();
-	void SetCurrentStamina(float newVal);
+	bool InteractWith(AMutagenPlayer* player);
+	void InitiateInteraction(AMutagenPlayer* player);
+	UQuest* AcceptQuest();
+	AItem* AddItem(AItem* item);
 
 private:
 	float currentHealth;
