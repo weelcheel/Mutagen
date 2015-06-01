@@ -2,6 +2,8 @@
 
 #include "Mutagen.h"
 #include "MutagenPlayer.h"
+#include "Bag.h"
+#include "Quest.h"
 #include "MutagenProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "GameFramework/InputSettings.h"
@@ -76,6 +78,9 @@ void AMutagenPlayer::SetupPlayerInputComponent(class UInputComponent* InputCompo
 	InputComponent->BindTouch(IE_Released, this, &AMutagenPlayer::TouchStopped);
 }
 
+/**
+ * Handler for when a touch input begins.
+ */
 void AMutagenPlayer::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	// jump, but only on the first touch
@@ -85,6 +90,9 @@ void AMutagenPlayer::TouchStarted(ETouchIndex::Type FingerIndex, FVector Locatio
 	}
 }
 
+/**
+ * Handler for when a touch input stops.
+ */
 void AMutagenPlayer::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	if (FingerIndex == ETouchIndex::Touch1)
@@ -93,6 +101,9 @@ void AMutagenPlayer::TouchStopped(ETouchIndex::Type FingerIndex, FVector Locatio
 	}
 }
 
+/**
+ * Handles moving forward/backward
+ */
 void AMutagenPlayer::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -107,6 +118,9 @@ void AMutagenPlayer::MoveForward(float Value)
 	}
 }
 
+/**
+ * Handles stafing movement, left and right
+ */
 void AMutagenPlayer::MoveRight(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -122,12 +136,20 @@ void AMutagenPlayer::MoveRight(float Value)
 	}
 }
 
+/**
+ * Called via input to turn at a given rate.
+ * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
+ */
 void AMutagenPlayer::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
+/**
+ * Called via input to turn look up/down at a given rate.
+ * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
+ */
 void AMutagenPlayer::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
@@ -143,3 +165,59 @@ void AMutagenPlayer::LookUpAtRate(float Rate)
 //	DOREPLIFETIME(ADigitalForgeCharacter, Health);
 //	DOREPLIFETIME(ADigitalForgeCharacter, BaseStats);*/
 //}
+
+
+
+TArray<UBag*> AMutagenPlayer::GetBags(){
+
+	return bags;
+}
+
+
+void AMutagenPlayer::SetBags(TArray<UBag*> newVal){
+
+	bags = newVal;
+}
+
+
+void AMutagenPlayer::OpenInventory(){
+
+}
+
+
+AItem* AMutagenPlayer::SelectInventoryItem(){
+
+	return  NULL;
+}
+
+
+bool AMutagenPlayer::ExchangeItems(AItem* itemA, AItem* itemB){
+
+	return false;
+}
+
+
+bool AMutagenPlayer::OpenQuestList(){
+	return false;
+}
+
+
+void AMutagenPlayer::SelectQuest(UQuest* questSelected){
+	selectedQuest = questSelected;
+}
+
+
+void AMutagenPlayer::AbandonQuest(UQuest* quest){
+	GetSelectedQuest() != NULL ? GetSelectedQuest()->AbandonQuest() : true;
+}
+
+
+UQuest* AMutagenPlayer::GetSelectedQuest(){
+	return selectedQuest;
+}
+
+
+bool AMutagenPlayer::OpenSkillTree(){
+
+	return false;
+}

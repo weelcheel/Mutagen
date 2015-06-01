@@ -6,28 +6,16 @@
 ///////////////////////////////////////////////////////////
 
 #pragma once
-#include "Array.h"
-#include "Item.h"
 #include "Object.h"
+#include "SlotContainer.h"
 #include "Inventory.generated.h"
 
 UCLASS(Blueprintable)
-class UInventory : public UObject
+class UInventory : public USlotContainer
 {
 	GENERATED_BODY()
 
 public:
 	UInventory();
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	TArray<AItem*> GetItems();
-
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void SetItems(TArray<AItem*> newVal);
-
-	UFUNCTION(BlueprintCallable, Category = Inventory)
-	void AddItem(AItem* newItem);
-
-private:
-	TArray<AItem*> items;
 };

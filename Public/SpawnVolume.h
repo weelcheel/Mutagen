@@ -11,7 +11,7 @@
 
 class ASpawnPoint;
 
-UCLASS()
+UCLASS(Blueprintable)
 class MUTAGEN_API ASpawnVolume : public AVolume
 {
 	GENERATED_UCLASS_BODY()

@@ -7,10 +7,10 @@
 
 class UQuest;
 
-/**
- * 
- */
-UCLASS()
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FObjectiveCompleted, UQuestObjective*, objective);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FObjectiveUpdated, UQuestObjective*, objective);
+
+UCLASS(Blueprintable)
 class MUTAGEN_API UQuestObjective : public UObject
 {
 	GENERATED_BODY()
@@ -21,22 +21,39 @@ private:
 
 	UQuest* quest;
 	bool complete;
-		
+
 public:
-	void SetUpListeners(UQuest* quest);
-	bool IsComplete();
-	void SetComplete(bool newVal);
-	UQuest* GetQuest();
-	void SetQuest(UQuest* newVal);
 
-	UFUNCTION(BlueprintCallable, Category=QuestObjective)
-	static UQuestObjective* CreateQuestObjective(FString oText = "Default Objective");
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+		FObjectiveCompleted OnObjectiveCompleted;
 
-	void NotifyQuest();
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+		FObjectiveUpdated OnObjectiveUpdated;
 
 	UFUNCTION(BlueprintCallable, Category = Quest)
-	FString GetObjectiveText();
+		void SetUpListeners(UQuest* quest);
 
 	UFUNCTION(BlueprintCallable, Category = Quest)
-	void SetObjectiveText(FString newName);
+		bool IsComplete();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		void SetComplete(bool newVal);
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		UQuest* GetQuest();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		void SetQuest(UQuest* newVal);
+
+	UFUNCTION(BlueprintCallable, Category = QuestObjective)
+		static UQuestObjective* CreateQuestObjective(FString oText = "Default Objective");
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		void NotifyQuest();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		FString GetObjectiveText();
+
+	UFUNCTION(BlueprintCallable, Category = Quest)
+		void SetObjectiveText(FString newName);
 };

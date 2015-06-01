@@ -10,15 +10,22 @@
 #include "Object.h"
 #include "Effect.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEffectActivated);
+
 UCLASS(Blueprintable)
 class UEffect : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UEffect();
+	UEffect(const FObjectInitializer& ObjectInitializer);
 
-	void Activate();
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+		FEffectActivated OnEffectActivated;
 
+	UFUNCTION(BlueprintCallable, Category = "Effect")
+		void Activate();
 
+	UFUNCTION(BlueprintCallable, Category = "Effect")
+		static UEffect* CreateEffect();
 };

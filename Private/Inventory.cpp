@@ -8,20 +8,8 @@
 #include "Inventory.h"
 
 
-UInventory::UInventory(){
+UInventory::UInventory() {
 
 }
 
 
-TArray<AItem*> UInventory::GetItems(){
-	return items;
-}
-
-void UInventory::SetItems(TArray<AItem*> newVal){
-	items = newVal;
-}
-
-void UInventory::AddItem(AItem* newItem)
-{
-	items.Add(newItem);
-}

@@ -7,6 +7,7 @@
 
 #include "Mutagen.h"
 #include "SpawnPoint.h"
+#include "BaseCharacter.h"
 
 /**
  * Sets default values for this actor's properties

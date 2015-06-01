@@ -16,19 +16,6 @@ namespace ItemEnumns
 	};
 }
 
-UENUM(BlueprintType)
-namespace GradeEnumns
-{
-	enum Grade
-	{
-		Wood,
-		Tin,
-		Copper,
-		Iron,
-		Steel
-	};
-}
-
 #pragma once
 #include "UnrealString.h"
 #include "Item.generated.h"
@@ -57,10 +44,10 @@ public:
 		void SetName(FString newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
-		GradeEnumns::Grade GetGrade();
+		int32 GetGrade();
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
-		void SetGrade(GradeEnumns::Grade newVal);
+		void SetGrade(int32 newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
 		AMutagenCharacter* GetItemOwner();
@@ -68,10 +55,62 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Item")
 		void SetItemOwner(AMutagenCharacter* newVal);
 
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		int32 GetAmount();
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetAmount(int32 newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		int32 GetStackSize();
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		void SetStackSize(int32 newVal);
+
+	UFUNCTION(BlueprintCallable, Category = "Item")
+		AItem* Copy();
+
+	FORCEINLINE AItem& operator+(AItem &aitem)
+	{
+		AItem* nitem = ConstructObject<AItem>(AItem::StaticClass());
+		if (nitem)
+		{
+			nitem->amount = aitem.amount + amount;
+		}
+
+		return *nitem;
+	}
+
+	FORCEINLINE AItem& operator+=(AItem &aitem)
+	{
+		amount += aitem.amount;
+
+		return *this;
+	}
+	FORCEINLINE AItem& operator-(AItem &aitem)
+	{
+		AItem* nitem = ConstructObject<AItem>(AItem::StaticClass());
+		if (nitem)
+		{
+			nitem->amount = aitem.amount - amount;
+		}
+
+		return *nitem;
+	}
+
+	FORCEINLINE AItem& operator-=(AItem &aitem)
+	{
+		amount -= aitem.amount;
+
+		return *this;
+	}
+
 private:
 	TEnumAsByte<ItemEnumns::ItemType> type;
 	FString name;
-	TEnumAsByte<GradeEnumns::Grade> grade;
+	int32 grade;
 	AMutagenCharacter* owner;
+	int32 amount;
+	int32 stackSize;
 
 };

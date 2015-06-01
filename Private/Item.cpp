@@ -32,12 +32,12 @@ void AItem::SetName(FString newVal){
 }
 
 
-GradeEnumns::Grade AItem::GetGrade(){
+int32 AItem::GetGrade(){
 	return grade;
 }
 
 
-void AItem::SetGrade(GradeEnumns::Grade newVal){
+void AItem::SetGrade(int32 newVal){
 	grade = newVal;
 }
 
@@ -49,4 +49,40 @@ AMutagenCharacter* AItem::GetItemOwner(){
 
 void AItem::SetItemOwner(AMutagenCharacter* newVal){
 	owner = newVal;
+}
+
+
+int32 AItem::GetAmount(){
+
+	return amount;
+}
+
+
+void AItem::SetAmount(int32 newVal){
+
+	amount = newVal;
+}
+
+
+int32 AItem::GetStackSize(){
+
+	return stackSize;
+}
+
+
+void AItem::SetStackSize(int32 newVal){
+
+	stackSize = newVal;
+}
+
+
+AItem* AItem::Copy() {
+	AItem* newItem = ConstructObject<AItem>(AItem::StaticClass());
+	newItem->SetName(GetName());
+	newItem->SetAmount(GetAmount());
+	newItem->SetStackSize(GetStackSize());
+	newItem->SetType(GetType());
+	newItem->SetGrade(GetGrade());
+	newItem->SetOwner(GetOwner());
+	return  newItem;
 }

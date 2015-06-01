@@ -46,6 +46,13 @@ void UQuestObjective::NotifyQuest(){
 	if (GetQuest() != NULL){
 		GetQuest()->ObjectiveUpdated(this);
 	}
+
+	if (OnObjectiveCompleted.IsBound() && IsComplete()){
+		OnObjectiveCompleted.Broadcast(this);
+	}
+	else if (OnObjectiveUpdated.IsBound()){
+		OnObjectiveUpdated.Broadcast(this);
+	}
 }
 
 FString UQuestObjective::GetObjectiveText()

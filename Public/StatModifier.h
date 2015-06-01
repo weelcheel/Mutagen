@@ -8,13 +8,15 @@ struct FStatModifier
 	GENERATED_USTRUCT_BODY()
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
-		int32 amount;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StatModifier")
+		float amount = 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
-		FString name;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StatModifier")
+		FString name = "";
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
-		bool positive;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StatModifier")
+		bool positive = true;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StatModifier")
+		bool percentage = false;
 };

@@ -8,14 +8,18 @@
 #include "Mutagen.h"
 #include "Effect.h"
 
-
-UEffect::UEffect(){
+UEffect::UEffect(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){
 
 }
-
-
 
 void UEffect::Activate(){
-
+	if (OnEffectActivated.IsBound()){
+		OnEffectActivated.Broadcast();
+	}
 }
 
+
+UEffect* UEffect::CreateEffect(){
+	UEffect& tempEffect = *ConstructObject<UEffect>(UEffect::StaticClass());
+	return  &tempEffect;
+}
