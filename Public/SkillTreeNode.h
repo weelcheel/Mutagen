@@ -5,15 +5,19 @@
 //  Original author: sam
 ///////////////////////////////////////////////////////////
 
-#if !defined(EA_3DEA1B1F_592B_4a84_8F1D_C4488EEB524E__INCLUDED_)
-#define EA_3DEA1B1F_592B_4a84_8F1D_C4488EEB524E__INCLUDED_
-
+#pragma once
 class USkillTreeNode
 {
+private:
+	float x;
+	float y;
+
 
 public:
-	USkillTreeNode();
-	virtual ~USkillTreeNode();
+	USkillTreeNode(const FObjectInitializer& ObjectInitializer);
+	float GetX();
+	void SetX(float newVal);
+	float GetY();
+	void SetY(float newVal);
 
 };
-#endif // !defined(EA_3DEA1B1F_592B_4a84_8F1D_C4488EEB524E__INCLUDED_)

@@ -81,3 +81,15 @@ ABaseCharacter* UPassive::GetOwner(){
 void UPassive::SetOwner(ABaseCharacter* newVal){
 	owner = newVal;
 }
+
+
+FString UPassive::GetName(){
+
+	return name;
+}
+
+
+void UPassive::SetName(FString newVal){
+
+	name = newVal;
+}

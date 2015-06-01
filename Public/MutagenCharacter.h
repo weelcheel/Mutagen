@@ -69,6 +69,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Skills")
 		bool AddSkill(USkill* newSkill);
 
+	UFUNCTION(BlueprintCallable, Category = "Skills")
+		bool ActivateSkill(USkill* skill);
+
 	UFUNCTION(BlueprintImplementableEvent, Category = HUD)
 		virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
 

@@ -91,5 +91,12 @@ void AMutagenCharacter::SetEquipedWeapons(TArray<AWeapon*> newVal){
 }
 
 bool AMutagenCharacter::AddSkill(USkill* newSkill){
-	return skills.Add(newSkill);
+	skills.Add(newSkill);
+	return true;
+}
+
+
+bool AMutagenCharacter::ActivateSkill(USkill* skill){
+
+	return false;
 }

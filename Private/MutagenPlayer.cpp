@@ -215,3 +215,9 @@ void AMutagenPlayer::AbandonQuest(UQuest* quest){
 UQuest* AMutagenPlayer::GetSelectedQuest(){
 	return selectedQuest;
 }
+
+
+bool AMutagenPlayer::OpenSkillTree(){
+
+	return false;
+}

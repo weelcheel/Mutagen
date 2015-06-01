@@ -102,4 +102,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Quests")
 		UQuest* GetSelectedQuest();
+
+	UFUNCTION(BlueprintCallable, Category = "Skills")
+		bool OpenSkillTree();
 };

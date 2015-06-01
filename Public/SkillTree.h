@@ -4,19 +4,25 @@
 //  Created on:      25-May-2015 17:22:32
 //  Original author: sam
 ///////////////////////////////////////////////////////////
+#pragma once
+#include "Array.h"
 
-#if !defined(EA_2D4BF1FF_52DC_4094_A2C9_64ED581955F4__INCLUDED_)
-#define EA_2D4BF1FF_52DC_4094_A2C9_64ED581955F4__INCLUDED_
+class USkillTreeNode;
 
 class USkillTree
 {
+private:
+	TArray<USkillTreeNode*> nodes;
 
 public:
-	USkillTree();
-	virtual ~USkillTree();
+	USkillTree(const FObjectInitializer& ObjectInitializer);
 
 	void SelectNode(USkillTreeNode* nodeToSelect);
 	void UnlockNode(USkillTreeNode* nodeToSelect);
+	void Reset();
+
+	TArray<USkillTreeNode*> GetNodes();
+
+	void SetNodes(TArray<USkillTreeNode*> newVal);
 
 };
-#endif // !defined(EA_2D4BF1FF_52DC_4094_A2C9_64ED581955F4__INCLUDED_)

@@ -1,0 +1,14 @@
+///////////////////////////////////////////////////////////
+//  Hotbar.cpp
+//  Implementation of the Class UHotbar
+//  Created on:      28-May-2015 21:51:06
+//  Original author: sam
+///////////////////////////////////////////////////////////
+
+#include "Mutagen.h"
+#include "Hotbar.h"
+
+
+UHotbar::UHotbar(){
+
+}
