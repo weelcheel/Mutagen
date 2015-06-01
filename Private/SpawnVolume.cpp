@@ -9,6 +9,12 @@
 #include "SpawnVolume.h"
 #include "SpawnPoint.h"
 
+ASpawnVolume::ASpawnVolume(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+
+}
+
 TArray<ASpawnPoint*> ASpawnVolume::GetSpawnPoints(){
 	return spawnPoints;
 }
@@ -18,24 +24,28 @@ void ASpawnVolume::SetSpawnPoints(TArray<ASpawnPoint*> newVal){
 	spawnPoints = newVal;
 }
 
-
-void ASpawnVolume::Spawn(){
-	for (ASpawnPoint* spawnPoint : GetSpawnPoints()){
-		spawnPoint != NULL ? spawnPoint->Spawn() : true;
+void ASpawnVolume::Spawn()
+{
+	for (ASpawnPoint* spawnPoint : spawnPoints)
+	{
+		if (spawnPoint)
+			spawnPoint->Spawn();
 	}
 }
 
-void ASpawnVolume::BeginPlay(){
+void ASpawnVolume::BeginPlay()
+{
 	Super::BeginPlay();
 	TArray<AActor*>& tempActors = *new TArray<AActor*>();
 
 	GetOverlappingActors(tempActors, ASpawnPoint::StaticClass());
 
-	for (AActor* actor : tempActors) {
-		ASpawnPoint* spawnPoint = Cast<ASpawnPoint>(actor);
-
-		if (spawnPoint != NULL){
-			spawnPoints.Add(spawnPoint);
+	for (AActor* temp : tempActors)
+	{
+		ASpawnPoint* sp = Cast<ASpawnPoint>(temp);
+		if (sp)
+		{
+			spawnPoints.Add(sp);
 		}
 	}
 }

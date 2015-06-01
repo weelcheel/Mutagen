@@ -15,6 +15,7 @@ class USkill;
 class AWeapon;
 class UPassive;
 class AItem;
+class AItemPickup;
 
 
 UCLASS(Blueprintable)
@@ -64,7 +65,7 @@ public:
 		TArray<USkill*> GetSkills();
 
 	UFUNCTION(BlueprintCallable, Category = "Skills")
-		void SetSkills(TArray<USkill*> newVal);
+	void SetSkills(TArray<USkill*> newVal);
 
 	UFUNCTION(BlueprintCallable, Category = "Skills")
 		bool AddSkill(USkill* newSkill);
@@ -76,6 +77,12 @@ public:
 		virtual void PostRenderFor(class APlayerController* PC, class UCanvas* Canvas, FVector CameraPosition, FVector CameraDir);
 
 
+
+	/** notify when a pickup is near */
+	void NotifyNearPickup(AItemPickup* nearPickup);
+
+	/** notify when a leaving pickup */
+	void NotifyLeavePickup(AItemPickup* leavingPickup);
 private:
 	/** current attacking state */
 	uint8 bWantsToAttack : 1;
